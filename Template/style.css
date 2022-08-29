@@ -1,0 +1,234 @@
+/* #B9D9EB */
+* {
+  /* makes it easy to handle border padding margin */
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5;
+  /* 16px * 62.5 = 10px = 1rem */
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: Arial, sans-serif, Helvetica;
+  /* overflow-y: scroll; */
+  /* overflow-x: scroll; */
+}
+/* main::-webkit-scrollbar {
+    display: none;
+} */
+/* utility classes */
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.fw {
+  width: 100%;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+li {
+  list-style-type: none;
+}
+.center-around {
+  align-items: center;
+  justify-content: space-around;
+}
+
+input {
+  width: 300px;
+  height: 35px;
+  outline: none;
+}
+.nav-search {
+  border: none;
+}
+.nav-search:hover {
+  border-bottom: 2px solid #8e2de2;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "nav nav nav"
+    "aside main main"
+    "footer footer footer";
+  grid-template-rows: 3rem 1fr 3rem;
+  grid-template-columns: 0.2fr 2fr 1fr;
+  gap: 0.1rem;
+}
+
+nav {
+  grid-area: nav;
+  /* border: 2px solid purple; */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.brand {
+  font-weight: 700;
+  font-size: x-large;
+  color: #8e2de2;
+}
+form {
+  display: flex;
+  align-items: center;
+}
+#email,
+#password {
+  width: 380px;
+  height: 3rem;
+  border-radius: 0.2rem;
+  border: none;
+}
+.signin-button {
+  cursor: pointer;
+  width: 380px;
+  border: none;
+  background-color: #8e2de2;
+  border-radius: 0.2rem;
+  height: 3rem;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+.signin-button :hover {
+  opacity: 1;
+}
+#create-acc {
+  color: white;
+}
+.search-btn {
+  height: 2.2rem;
+  width: 3rem;
+  background-color: #8e2de2;
+  border: none;
+  border-radius: 0.2rem;
+  color: black;
+}
+.user a {
+  font-weight: 600;
+  color: #8e2de2;
+}
+
+aside {
+  grid-area: aside;
+  /* border: 2px solid black; */
+  width: 9rem;
+  margin-left: 0;
+  height: 100%;
+  background-color: #8e2de2;
+  color: white;
+}
+.sidenav a {
+  font-size: small;
+  margin-left: 50px;
+  font-weight: 100;
+}
+aside a {
+  color: white;
+}
+.list {
+  margin-right: 2rem;
+  margin-top: 3rem;
+}
+ul {
+  padding: 0;
+  margin: 0;
+  /* border: #38ef7d 2px solid; */
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+ul li {
+  margin: 1.5rem;
+  height: 4rem;
+  width: 8.8rem;
+  /* border: #38f7d 2px solid; */
+  font-weight: 600;
+  font-size: medium;
+}
+ul li:hover {
+  /* border-left: 3px solid black; */
+  /* border-width: 100%; */
+  border-left: white 8px solid;
+}
+main {
+  grid-area: main;
+  /* border: 2px solid red; */
+  /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+  /* margin: 0 auto; */
+  margin-top: 1rem;
+}
+.add-product {
+  background-color: #8e2de2;
+  color: white;
+  margin-bottom: 1rem;
+  border: none;
+  height: 2.5rem;
+  width: 8rem;
+  border-radius: 0.5rem;
+}
+.fa-plus {
+  margin: 0.5rem;
+}
+.table-container {
+  margin-top: 3.5rem;
+  margin-left: 3rem;
+}
+.table {
+  width: 85%;
+  border-collapse: collapse;
+}
+
+.table thead tr {
+  /* border-bottom: 2px solid #38ef7d; */
+  background-color: #8e2de2;
+  color: white;
+  font-size: small;
+  font-weight: 600;
+}
+.table tbody tr {
+  height: 100px;
+  font-size: smaller;
+  font-weight: 600;
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table td,
+.table th {
+  text-align: left;
+  /* border: 0.1rem solid #e4e4e4; */
+  padding: 0.5rem;
+}
+footer {
+  grid-area: footer;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  /* margin-top: 2rem; */
+  /* border: 2px solid black; */
+}
+/* signin */
+.form-container {
+  height: 500px;
+  width: 450px;
+  /* border: 2px solid black; */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  background: linear-gradient(
+    148deg,
+    rgba(142, 45, 226, 1) 42%,
+    rgba(74, 0, 224, 1) 99%
+  );
+  border-radius: 0.5rem;
+  padding: 2rem;
+}
+.form-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
