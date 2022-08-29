@@ -154,6 +154,7 @@ ul li {
   /* border: #38f7d 2px solid; */
   font-weight: 600;
   font-size: medium;
+  color: white;
 }
 ul li:hover {
   /* border-left: 3px solid black; */

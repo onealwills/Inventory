@@ -126,9 +126,7 @@ aside {
   margin-left: 50px;
   font-weight: 100;
 }
-aside a {
-  color: white;
-}
+
 .list {
   margin-right: 2rem;
   margin-top: 3rem;
@@ -151,6 +149,7 @@ ul li {
   font-weight: 600;
   font-size: medium;
 }
+
 ul li:hover {
   /* border-left: 3px solid black; */
   /* border-width: 100%; */
@@ -163,6 +162,29 @@ main {
   /* margin: 0 auto; */
   margin-top: 1rem;
 }
+
+.loading {
+  display: block !important;
+}
+
+.alert {
+  padding: 1rem;
+  border: 0.1rem solid transparent;
+  border-radius: 0.5rem;
+}
+.alert-info {
+  color: #2020a0;
+  background-color: #e0e0ff;
+}
+.alert-danger {
+  color: #a02020;
+  background-color: #ffe0e0;
+}
+.alert-success {
+  color: #20a020;
+  background-color: #eeffe0;
+}
+
 .add-product {
   background-color: #8e2de2;
   color: white;
