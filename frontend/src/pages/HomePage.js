@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from "react";
 import Product from "../components/Product";
 import axios from "axios";
+import Message from "../components/Message";
+import Loading from "../components/Loading";
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const { data } = await axios.get("/api/products");
+        setLoading(false);
         setProducts(data);
       } catch (error) {
-        console.log(error.message);
+        setError(error.message);
+        setLoading(false);
       }
     };
 
@@ -35,9 +42,17 @@ export default function HomePage() {
             <td>PRICE</td>
           </tr>
         </thead>
-        {products.map((product) => (
-          <Product key={product._id} product={product}></Product>
-        ))}
+        {loading ? (
+          <Loading></Loading>
+        ) : error ? (
+          <Message type="danger">{error}</Message>
+        ) : (
+          <tbody>
+            {products.map((product) => (
+              <Product key={product._id} product={product}></Product>
+            ))}
+          </tbody>
+        )}
       </table>
     </div>
   );
