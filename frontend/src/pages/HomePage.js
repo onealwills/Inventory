@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Product from "../components/Product";
-import data from "../data";
+import axios from "axios";
 
-export default function HomePage(props) {
+export default function HomePage() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get("/api/products");
+        setProducts(data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="table-container">
       <button className="add-product">
@@ -21,7 +35,7 @@ export default function HomePage(props) {
             <td>PRICE</td>
           </tr>
         </thead>
-        {data.products.map((product) => (
+        {products.map((product) => (
           <Product key={product._id} product={product}></Product>
         ))}
       </table>
