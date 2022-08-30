@@ -1,29 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Product from "../components/Product";
-import axios from "axios";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { listproducts } from "../actions/productActions";
 
 export default function HomePage() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const { data } = await axios.get("/api/products");
-        setLoading(false);
-        setProducts(data);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+    dispatch(listproducts());
+  }, [dispatch]);
   return (
     <div className="table-container">
       <button className="add-product">
