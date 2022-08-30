@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import Product from "../components/Product";
-import Message from "../components/Message";
-import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { listproducts } from "../actions/productActions";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -32,9 +32,9 @@ export default function HomePage() {
           </tr>
         </thead>
         {loading ? (
-          <Loading></Loading>
+          <LoadingBox></LoadingBox>
         ) : error ? (
-          <Message type="danger">{error}</Message>
+          <MessageBox type="danger">{error}</MessageBox>
         ) : (
           <tbody>
             {products.map((product) => (
