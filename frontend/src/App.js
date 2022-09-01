@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Link, Route } from "react-router-dom";
+import CartPage from "./pages/CartPage";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 
@@ -9,9 +10,9 @@ function App() {
       <div className="grid-container">
         <nav className="flex center-around">
           <div>
-            <a className="brand" href="/">
+            <Link className="brand" to="/">
               WareHouse
-            </a>
+            </Link>
           </div>
           <div className="form-div">
             <form autocomplete="on">
@@ -26,38 +27,39 @@ function App() {
             </form>
           </div>
           <div className="user">
-            <a href="/Cart">Cart</a>
-            <a href="/signin">Sign-in</a>
+            <Link to="/Cart">Cart</Link>
+            <Link to="/signin">Sign-in</Link>
             {/* <i className="fa fa-caret-down"></i> */}
           </div>
         </nav>
         <aside>
           <div className="list">
             <ul className="sidenav">
-              <a href="/Condenser">
+              <Link to="/Condenser">
                 <li>Condenser</li>
-              </a>
-              <a href="/Evaporator">
+              </Link>
+              <Link to={"/Evaporator"}>
                 <li>Evaporator</li>
-              </a>
-              <a href="/Compressor">
+              </Link>
+              <Link to="/Compressor">
                 <li>Compressor</li>
-              </a>
-              <a href="/Expansion Valve">
+              </Link>
+              <Link to="/Expansion Valve">
                 <li>Expansion Valve</li>
-              </a>
-              <a href="/Cabin Filter">
+              </Link>
+              <Link to="/Cabin Filter">
                 <li>Cabin Filter</li>
-              </a>
-              <a href="/Gas">
+              </Link>
+              <Link to="/Gas">
                 <li>Gas</li>
-              </a>
+              </Link>
             </ul>
           </div>
         </aside>
         <main>
-          <Route path={"/product/:id"} component={ProductPage}></Route>
-          <Route path={"/"} component={HomePage} exact></Route>
+          <Route path="/cart/:id?" component={CartPage}></Route>
+          <Route path="/product/:id" component={ProductPage}></Route>
+          <Route path="/" component={HomePage} exact></Route>
         </main>
         <footer className="flex center-around">
           <div>WareHouse App is powered by: Mac-Davids Enterprise</div>

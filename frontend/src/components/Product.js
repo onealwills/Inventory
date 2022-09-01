@@ -15,7 +15,7 @@ export default function Product(props) {
       <td>{product.make}</td>
       <td>{product.model}</td>
       <td>{product.year}</td>
-      <td>{product.qty}</td>
+      <td>{product.stockQty}</td>
       <td>
         <span>&#8358;</span>
         {product.price}

@@ -258,3 +258,9 @@ footer {
   color: #20a020;
   background-color: #eeffe0;
 }
+.success {
+  color: #20a020;
+}
+.danger {
+  color: #a02020;
+}

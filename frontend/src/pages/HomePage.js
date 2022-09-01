@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Product from "../components/Product";
 import { useDispatch, useSelector } from "react-redux";
-import { listproducts } from "../actions/productActions";
+import { listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 
@@ -11,7 +11,7 @@ export default function HomePage() {
   const { loading, error, products } = productList;
 
   useEffect(() => {
-    dispatch(listproducts());
+    dispatch(listProducts());
   }, [dispatch]);
   return (
     <div className="table-container">
@@ -27,7 +27,7 @@ export default function HomePage() {
             <td>MAKE</td>
             <td>MODEL</td>
             <td>YEAR</td>
-            <td>QTY</td>
+            <td>STOCKQTY</td>
             <td>PRICE</td>
           </tr>
         </thead>

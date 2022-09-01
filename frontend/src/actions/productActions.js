@@ -8,7 +8,7 @@ import {
   PRODUCT_LIST_SUCCESS,
 } from "../constants/productConstants";
 
-export const listproducts = () => async (dispatch) => {
+export const listProducts = () => async (dispatch) => {
   dispatch({
     type: PRODUCT_LIST_REQUEST,
   });
@@ -20,7 +20,7 @@ export const listproducts = () => async (dispatch) => {
   }
 };
 
-export const detailsproduct = (productId) => async (dispatch) => {
+export const detailsProduct = (productId) => async (dispatch) => {
   dispatch({
     type: PRODUCT_DETAIL_REQUEST,
     payload: productId,

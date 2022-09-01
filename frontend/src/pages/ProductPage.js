@@ -1,20 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { detailsproduct } from "../actions/productActions";
+import { detailsProduct } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 
 export default function ProductPage(props) {
   const dispatch = useDispatch();
+  const [qty, setQty] = useState(1);
   const productId = props.match.params.id;
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
-  console.log("productdetails >>>", productDetails);
+  // console.log("productdetails >>>", productDetails);
 
   useEffect(() => {
-    dispatch(detailsproduct(productId));
+    dispatch(detailsProduct(productId));
   }, [dispatch, productId]);
 
+  const addToCart = () => {
+    props.history.push(`/cart/${productId}?qty=${qty}`);
+  };
   return (
     <div>
       {loading ? (
@@ -71,7 +75,7 @@ export default function ProductPage(props) {
               </h4>
               <h3>Status</h3>
               <div>
-                {product.qty > 0 ? (
+                {product.stockQty > 0 ? (
                   <h5 className="success">In stock</h5>
                 ) : (
                   <h5 className="danger">Out Of Stock</h5>
@@ -79,18 +83,23 @@ export default function ProductPage(props) {
               </div>
               <li>
                 <div>
-                  {product.qty > 0 && (
+                  {product.stockQty > 0 && (
                     <div>
                       <div>
-                        <select>
-                          {[...Array(product.qty).keys()].map((x) => (
+                        <select
+                          value={qty}
+                          onChange={(e) => setQty(e.target.value)}
+                        >
+                          {[...Array(product.stockQty).keys()].map((x) => (
                             <option key={x + 1} value={x + 1}>
                               {x + 1}
                             </option>
                           ))}
                         </select>
                       </div>
-                      <button className="fw addtocart-btn">Add to cart</button>
+                      <button onClick={addToCart} className="fw addtocart-btn">
+                        Add to cart
+                      </button>
                     </div>
                   )}
                 </div>

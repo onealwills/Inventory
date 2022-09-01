@@ -7,7 +7,7 @@ const data = {
       make: "Honda",
       model: "CRV",
       year: "2009",
-      qty: 50,
+      stockQty: 50,
       price: 12000,
     },
     {
@@ -17,7 +17,7 @@ const data = {
       make: "Toyota",
       model: "RAV4",
       year: "2009",
-      qty: 20,
+      stockQty: 0,
       price: 11000,
     },
     {
@@ -27,7 +27,7 @@ const data = {
       make: "Ford",
       model: "Escape",
       year: "2010",
-      qty: 80,
+      stockQty: 80,
       price: 14000,
     },
     {
@@ -37,7 +37,7 @@ const data = {
       make: "Ford",
       model: "Focus",
       year: "2010",
-      qty: 30,
+      stockQty: 30,
       price: 19000,
     },
     {
@@ -47,7 +47,7 @@ const data = {
       make: "Mazda",
       model: "Mazda 3",
       year: "2010",
-      qty: 51,
+      stockQty: 51,
       price: 11000,
     },
     {
@@ -57,7 +57,7 @@ const data = {
       make: "Audi",
       model: "A5",
       year: "2011",
-      qty: 13,
+      stockQty: 13,
       price: 1200,
     },
     {
@@ -67,7 +67,7 @@ const data = {
       make: "Audi",
       model: "A5",
       year: "2011",
-      qty: 45,
+      stockQty: 45,
       price: 85000,
     },
     {
@@ -77,7 +77,7 @@ const data = {
       make: "Audi",
       model: "A5",
       year: "2011",
-      qty: 23,
+      stockQty: 23,
       price: 2500,
     },
     {
@@ -87,7 +87,7 @@ const data = {
       make: "Audi",
       model: "A5",
       year: "2011",
-      qty: 100,
+      stockQty: 100,
       price: 1200,
     },
     {
@@ -97,7 +97,7 @@ const data = {
       make: "Honda",
       model: "Pilot",
       year: "2011",
-      qty: 98,
+      stockQty: 98,
       price: 1000,
     },
     {
@@ -107,7 +107,7 @@ const data = {
       make: "Honda",
       model: "CRV",
       year: "2014",
-      qty: 53,
+      stockQty: 53,
       price: 1300,
     },
     {
@@ -117,7 +117,7 @@ const data = {
       make: "Honda",
       model: "CRV",
       year: "2014",
-      qty: 10,
+      stockQty: 10,
       price: 120000,
     },
     {
@@ -127,7 +127,7 @@ const data = {
       make: "Honda",
       model: "CRV",
       year: "2014",
-      qty: 120,
+      stockQty: 120,
       price: 12000,
     },
     {
@@ -137,7 +137,7 @@ const data = {
       make: "Land Rover",
       model: "LR4",
       year: "2014",
-      qty: 50,
+      stockQty: 50,
       price: 1100,
     },
     {
@@ -147,7 +147,7 @@ const data = {
       make: "Land Rover",
       model: "LR4",
       year: "2014",
-      qty: 70,
+      stockQty: 70,
       price: 12000,
     },
     {
@@ -157,7 +157,7 @@ const data = {
       make: "BMW",
       model: "X5",
       year: "2016",
-      qty: 40,
+      stockQty: 40,
       price: 17000,
     },
     {
@@ -167,7 +167,7 @@ const data = {
       make: "BMW",
       model: "X5",
       year: "2016",
-      qty: 10,
+      stockQty: 10,
       price: 1300,
     },
     {
@@ -177,7 +177,7 @@ const data = {
       make: "BMW",
       model: "X5",
       year: "2016",
-      qty: 5,
+      stockQty: 5,
       price: 250000,
     },
     {
@@ -187,7 +187,7 @@ const data = {
       make: "Honda",
       model: "Accord",
       year: "2017",
-      qty: 140,
+      stockQty: 140,
       price: 1500,
     },
     {
@@ -197,7 +197,7 @@ const data = {
       make: "Honda",
       model: "Accord",
       year: "2017",
-      qty: 12,
+      stockQty: 12,
       price: 170000,
     },
     {
@@ -207,7 +207,7 @@ const data = {
       make: "Honda",
       model: "Accord",
       year: "2017",
-      qty: 150,
+      stockQty: 150,
       price: 10000,
     },
     {
@@ -217,7 +217,7 @@ const data = {
       make: "Land Rover",
       model: "Range Rover Evoque",
       year: "2017",
-      qty: 40,
+      stockQty: 40,
       price: 17000,
     },
     {
@@ -227,7 +227,7 @@ const data = {
       make: "Land Rover",
       model: "Range Rover Evoque",
       year: "2017",
-      qty: 10,
+      stockQty: 10,
       price: 350000,
     },
     {
@@ -237,7 +237,7 @@ const data = {
       make: "Land Rover",
       model: "Range Rover Evoque",
       year: "2017",
-      qty: 170,
+      stockQty: 170,
       price: 14500,
     },
     {
@@ -247,7 +247,7 @@ const data = {
       make: "BMW",
       model: "X6",
       year: "2016",
-      qty: 15,
+      stockQty: 15,
       price: 18000,
     },
     {
@@ -257,7 +257,7 @@ const data = {
       make: "BMW",
       model: "X6",
       year: "2016",
-      qty: 45,
+      stockQty: 45,
       price: 19000,
     },
     {
@@ -267,7 +267,7 @@ const data = {
       make: "Ford",
       model: "Edge",
       year: "2011",
-      qty: 35,
+      stockQty: 35,
       price: 13000,
     },
     {
@@ -277,7 +277,7 @@ const data = {
       make: "Hyundai",
       model: "Tucson",
       year: "2013",
-      qty: 10,
+      stockQty: 10,
       price: 19000,
     },
     {
@@ -287,7 +287,7 @@ const data = {
       make: "Hyundai",
       model: "Tucson",
       year: "2017",
-      qty: 500,
+      stockQty: 500,
       price: 800,
     },
     {
@@ -297,7 +297,7 @@ const data = {
       make: "Hyundai",
       model: "tucson",
       year: "2017",
-      qty: 10,
+      stockQty: 10,
       price: 170000,
     },
     {
@@ -307,7 +307,7 @@ const data = {
       make: "Hyundai",
       model: "tucson",
       year: "2017",
-      qty: 20,
+      stockQty: 20,
       price: 1400,
     },
     {
@@ -317,7 +317,7 @@ const data = {
       make: "Hyundai",
       model: "tucson",
       year: "2017",
-      qty: 12,
+      stockQty: 12,
       price: 130000,
     },
     {
@@ -327,7 +327,7 @@ const data = {
       make: "Hyundai",
       model: "tucson",
       year: "2017",
-      qty: 60,
+      stockQty: 60,
       price: 12000,
     },
     {
@@ -337,7 +337,7 @@ const data = {
       make: "Hyundai",
       model: "tucson",
       year: "2017",
-      qty: 150,
+      stockQty: 150,
       price: 11000,
     },
     {
@@ -347,7 +347,7 @@ const data = {
       make: "Kia",
       model: "Rio",
       year: "2014",
-      qty: 50,
+      stockQty: 50,
       price: 8000,
     },
     {
@@ -357,7 +357,7 @@ const data = {
       make: "Mazda",
       model: "CX7",
       year: "2012",
-      qty: 53,
+      stockQty: 53,
       price: 16000,
     },
     {
@@ -367,7 +367,7 @@ const data = {
       make: "Mercedes",
       model: "GLK350",
       year: "2015",
-      qty: 30,
+      stockQty: 30,
       price: 25000,
     },
     {
@@ -377,7 +377,7 @@ const data = {
       make: "Mercedes",
       model: "GLK350",
       year: "2015",
-      qty: 31,
+      stockQty: 31,
       price: 45000,
     },
     {
@@ -387,7 +387,7 @@ const data = {
       make: "Mercedes",
       model: "GLK",
       year: "2015",
-      qty: 10,
+      stockQty: 10,
       price: 35000,
     },
     {
@@ -397,7 +397,7 @@ const data = {
       make: "Mercedes",
       model: "GLK",
       year: "2015",
-      qty: 2,
+      stockQty: 2,
       price: 450000,
     },
     {
@@ -407,7 +407,7 @@ const data = {
       make: "Toyota",
       model: "Corolla",
       year: "2008",
-      qty: 30,
+      stockQty: 30,
       price: 12000,
     },
     {
@@ -417,7 +417,7 @@ const data = {
       make: "Toyota",
       model: "highlander",
       year: "2010",
-      qty: 34,
+      stockQty: 34,
       price: 12500,
     },
     {
@@ -427,7 +427,7 @@ const data = {
       make: "Toyota",
       model: "venza",
       year: "2016",
-      qty: 5,
+      stockQty: 5,
       price: 12000,
     },
     {
@@ -437,7 +437,7 @@ const data = {
       make: "Toyota",
       model: "venza",
       year: "2016",
-      qty: 13,
+      stockQty: 13,
       price: 2000,
     },
     {
@@ -447,7 +447,7 @@ const data = {
       make: "Toyota",
       model: "venza",
       year: "2016",
-      qty: 19,
+      stockQty: 19,
       price: 20000,
     },
   ],
