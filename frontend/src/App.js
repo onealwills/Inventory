@@ -1,10 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import CartPage from "./pages/CartPage";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 
 function App() {
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
   return (
     <BrowserRouter>
       <div className="grid-container">
@@ -27,7 +30,12 @@ function App() {
             </form>
           </div>
           <div className="user">
-            <Link to="/Cart">Cart</Link>
+            <Link to="/Cart">
+              Cart
+              {cartItems.length > 0 && (
+                <span className="cart-badge">{cartItems.length}</span>
+              )}
+            </Link>
             <Link to="/signin">Sign-in</Link>
             {/* <i className="fa fa-caret-down"></i> */}
           </div>
