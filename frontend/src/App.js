@@ -1,11 +1,23 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Link, Route } from "react-router-dom";
+import SideNav from "./components/SideNav";
+
 import CartPage from "./pages/CartPage";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 
 function App() {
+  const categories = [
+    { _id: "1", type: "condenser" },
+    { _id: "2", type: "Evaporator" },
+    { _id: "3", type: "compressor" },
+    { _id: "4", type: "Expansion valve" },
+    { _id: "5", type: "Cabin filter" },
+    { _id: "6", type: "A/c Drier" },
+    { _id: "7", type: "Cabin filter" },
+  ];
+
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   return (
@@ -22,7 +34,7 @@ function App() {
               <input
                 className="nav-search"
                 type="text"
-                placeholder="search..."
+                placeholder="search for product..."
               />
               <button className="search-btn" type="submit">
                 <i className="fa fa-search"></i>
@@ -40,30 +52,9 @@ function App() {
             {/* <i className="fa fa-caret-down"></i> */}
           </div>
         </nav>
-        <aside>
-          <div className="list">
-            <ul className="sidenav">
-              <Link to="/Condenser">
-                <li>Condenser</li>
-              </Link>
-              <Link to={"/Evaporator"}>
-                <li>Evaporator</li>
-              </Link>
-              <Link to="/Compressor">
-                <li>Compressor</li>
-              </Link>
-              <Link to="/Expansion Valve">
-                <li>Expansion Valve</li>
-              </Link>
-              <Link to="/Cabin Filter">
-                <li>Cabin Filter</li>
-              </Link>
-              <Link to="/Gas">
-                <li>Gas</li>
-              </Link>
-            </ul>
-          </div>
-        </aside>
+
+        <SideNav categories={categories} />
+
         <main>
           <Route path="/cart/:id?" component={CartPage}></Route>
           <Route path="/product/:id" component={ProductPage}></Route>
