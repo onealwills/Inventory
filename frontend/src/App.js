@@ -52,7 +52,6 @@ function App() {
             {/* <i className="fa fa-caret-down"></i> */}
           </div>
         </nav>
-
         <SideNav categories={categories} />
 
         <main>

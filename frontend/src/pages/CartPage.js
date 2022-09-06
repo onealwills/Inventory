@@ -21,30 +21,31 @@ export default function CartPage(props) {
     }
   }, [dispatch, productId, qty]);
   return (
-    <div>
-      <div>
-        <h3>WareHouse Cart</h3>
+    <div className="cartpage-container">
+      <h3 className="cart-header">WareHouse Cart</h3>
+      <div className="cartpage">
         {cartItems === 0 ? (
           <MessageBox>
             Cart is Empty <Link to="/">Back to Warehouse</Link>
           </MessageBox>
         ) : (
-          <ul>
+          <div className="cartproduct-container">
             {cartItems.map((item) => (
-              <li key={item.product}>
-                <div>
+              <div className="cart-product" key={item.product}>
+                <div className="cart-image">
                   <img src={item.image} alt={item.model}></img>
                 </div>
-                <div>
+                <div className="cart-productdesc">
                   <Link to={`/product/${item.product}`}>
-                    {item.type}
-                    {item.make}
-                    {item.model}
-                    {item.year}
+                    <span>{item.type}</span>
+                    <span> {item.make}</span>
+                    <span> {item.model}</span>
+                    <span> {item.year}</span>
                   </Link>
                 </div>
-                <div>
+                <div className="cart-qty">
                   <select
+                    className="select-qty"
                     value={item.stockQty}
                     onChange={(e) =>
                       dispatch(addToCart(item.product), Number(e.target.value))
@@ -66,9 +67,9 @@ export default function CartPage(props) {
                     Delete
                   </button> */}
                 </div>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </div>

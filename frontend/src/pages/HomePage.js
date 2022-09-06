@@ -9,7 +9,7 @@ export default function HomePage() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
-  console.log("productlist >>>", productList);
+  // console.log("productlist >>>", productList);
 
   useEffect(() => {
     dispatch(listProducts());

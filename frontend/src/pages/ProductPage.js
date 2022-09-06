@@ -20,14 +20,14 @@ export default function ProductPage(props) {
     props.history.push(`/cart/${productId}?qty=${qty}`);
   };
   return (
-    <div>
+    <div className="productpage-container">
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox type="danger">{error}</MessageBox>
       ) : (
         <div className="productpage">
-          <div className="flex-2 flex-just">
+          <div className="flex-2">
             <div>
               <img
                 className="large-image"
@@ -36,19 +36,6 @@ export default function ProductPage(props) {
               />
             </div>
             <div>
-              <h3>{product.type}</h3>
-              <h2>
-                <span>Car:</span>
-                {product.make}-{product.model}-{product.year}
-              </h2>
-              <h2>
-                <span>Price:</span>
-                <span>&#8358;</span>
-                {product.price}
-              </h2>
-              <h2>
-                <span>Can Also fit:</span>Toyota venza 2019
-              </h2>
               <img
                 className="small-image"
                 src={product.image}
@@ -69,20 +56,26 @@ export default function ProductPage(props) {
 
           <div className="flex-1">
             <div>
-              <h4>
-                Price : <span>&#8358;</span>
-                {product.price}
-              </h4>
-              <h3>Status</h3>
-              <div>
+              <h3>Product type: {product.type}</h3>
+              <h2>
+                <span>Car: </span>
+                {product.make} {product.model} {product.year}
+              </h2>
+
+              <h2>Can Also fit:</h2>
+              <div className="also-fit">Toyota venza 2019</div>
+              <div className="status-qty">
+                <h4>
+                  Price : <span>&#8358;</span>
+                  {product.price}
+                </h4>
+                <h3>Status</h3>
                 {product.stockQty > 0 ? (
                   <h5 className="success">In stock</h5>
                 ) : (
                   <h5 className="danger">Out Of Stock</h5>
                 )}
-              </div>
-              <li>
-                <div>
+                <li>
                   {product.stockQty > 0 && (
                     <div>
                       <div>
@@ -102,8 +95,8 @@ export default function ProductPage(props) {
                       </button>
                     </div>
                   )}
-                </div>
-              </li>
+                </li>
+              </div>
             </div>
           </div>
         </div>
