@@ -65,21 +65,26 @@ export default function ProductPage(props) {
               <h2>Can Also fit:</h2>
               <div className="also-fit">Toyota venza 2019</div>
               <div className="status-qty">
-                <h4>
+                <h3>
                   Price : <span>&#8358;</span>
                   {product.price}
-                </h4>
-                <h3>Status</h3>
-                {product.stockQty > 0 ? (
-                  <h5 className="success">In stock</h5>
-                ) : (
-                  <h5 className="danger">Out Of Stock</h5>
-                )}
-                <li>
+                </h3>
+                <div className="status">
+                  <h3>Status:</h3>
+                  {product.stockQty > 0 ? (
+                    <h3 className="success">In stock</h3>
+                  ) : (
+                    <h3 className="danger">Out Of Stock</h3>
+                  )}
+                </div>
+
+                <div>
                   {product.stockQty > 0 && (
                     <div>
-                      <div>
+                      <div className="qty">
+                        <h3>qty:</h3>
                         <select
+                          className="select-qty"
                           value={qty}
                           onChange={(e) => setQty(e.target.value)}
                         >
@@ -95,7 +100,7 @@ export default function ProductPage(props) {
                       </button>
                     </div>
                   )}
-                </li>
+                </div>
               </div>
             </div>
           </div>
