@@ -1,7 +1,34 @@
+import bcrypt from "bcryptjs";
+
 const data = {
+  users: [
+    {
+      name: "Oneal",
+      email: "SuperAdmin@example.com",
+      password: bcrypt.hashSync("1234", 8),
+      isSuperAdmin: true,
+      isAdmin: true,
+      isStockKeeper: true,
+    },
+    {
+      name: "John",
+      email: "Admin@example.com",
+      password: bcrypt.hashSync("1234", 8),
+      isSuperAdmin: false,
+      isAdmin: true,
+      isStockKeeper: true,
+    },
+    {
+      name: "Bills",
+      email: "StockKeeper@example.com",
+      password: bcrypt.hashSync("1234", 8),
+      isSuperAdmin: false,
+      isAdmin: false,
+      isStockKeeper: true,
+    },
+  ],
   products: [
     {
-      _id: "1",
       image: "/images/2009 Honda CRV drier.jpg",
       type: "Ac/drier",
       make: "Honda",
@@ -11,7 +38,6 @@ const data = {
       price: 12000,
     },
     {
-      _id: "2",
       image: "/images/2009 Toyota RAV4 drier.jpg",
       type: "Ac/drier",
       make: "Toyota",
@@ -21,7 +47,6 @@ const data = {
       price: 11000,
     },
     {
-      _id: "3",
       image: "/images/2010 Ford Escape drier.jpg",
       type: "Ac/drier",
       make: "Ford",
@@ -31,7 +56,6 @@ const data = {
       price: 14000,
     },
     {
-      _id: "4",
       image: "/images/2010 Ford Focus drier.jpg",
       type: "Ac/drier",
       make: "Ford",
@@ -41,7 +65,6 @@ const data = {
       price: 19000,
     },
     {
-      _id: "5",
       image: "/images/2010 Mazda 3  drier.jpg",
       type: "Ac/drier",
       make: "Mazda",
@@ -51,7 +74,6 @@ const data = {
       price: 11000,
     },
     {
-      _id: "6",
       image: "/images/2011 Audi A5 cabin.jpg",
       type: "Cabin Filter",
       make: "Audi",
@@ -61,7 +83,6 @@ const data = {
       price: 1200,
     },
     {
-      _id: "7",
       image: "/images/2011 Audi A5 comp.jpg",
       type: "Compressor",
       make: "Audi",
@@ -71,7 +92,6 @@ const data = {
       price: 85000,
     },
     {
-      _id: "8",
       image: "/images/2011 Audi A5 drier.jpg",
       type: "Ac/drier",
       make: "Audi",
@@ -81,7 +101,6 @@ const data = {
       price: 2500,
     },
     {
-      _id: "9",
       image: "/images/2011 Audi A5 valve.jpg",
       type: "Exapansion Valve",
       make: "Audi",
@@ -91,7 +110,6 @@ const data = {
       price: 1200,
     },
     {
-      _id: "10",
       image: "/images/2011 Honda Pilot drier.jpg",
       type: "Ac/drier",
       make: "Honda",
@@ -101,7 +119,6 @@ const data = {
       price: 1000,
     },
     {
-      _id: "11",
       image: "/images/2014 Honda CRV cabin.jpg",
       type: "Cabin Filter",
       make: "Honda",
@@ -111,7 +128,6 @@ const data = {
       price: 1300,
     },
     {
-      _id: "12",
       image: "/images/2014 Honda CRV comp.jpg",
       type: "Compressor",
       make: "Honda",
@@ -121,7 +137,6 @@ const data = {
       price: 120000,
     },
     {
-      _id: "13",
       image: "/images/2014 Honda CRV valve.jpg",
       type: "Expansion valve",
       make: "Honda",
@@ -131,7 +146,6 @@ const data = {
       price: 12000,
     },
     {
-      _id: "14",
       image: "/images/2014 Land Rover LR4 cabin.jpg",
       type: "Cabin Filter",
       make: "Land Rover",
@@ -141,7 +155,6 @@ const data = {
       price: 1100,
     },
     {
-      _id: "15",
       image: "/images/2014 Land Rover LR4 valve.jpg",
       type: "Expansion valve",
       make: "Land Rover",
@@ -151,7 +164,6 @@ const data = {
       price: 12000,
     },
     {
-      _id: "16",
       image: "/images/2016 BMW X5  valve.jpg",
       type: "Expansion valve",
       make: "BMW",
@@ -161,7 +173,6 @@ const data = {
       price: 17000,
     },
     {
-      _id: "17",
       image: "/images/2016 BMW X5 cabin.jpg",
       type: "Cabin Filter",
       make: "BMW",
@@ -171,7 +182,6 @@ const data = {
       price: 1300,
     },
     {
-      _id: "18",
       image: "/images/2016 BMW X5 comp.jpg",
       type: "Compressor",
       make: "BMW",
@@ -181,7 +191,6 @@ const data = {
       price: 250000,
     },
     {
-      _id: "19",
       image: "/images/2017 Honda Accord cabin.jpg",
       type: "Cabin filter",
       make: "Honda",
@@ -191,7 +200,6 @@ const data = {
       price: 1500,
     },
     {
-      _id: "20",
       image: "/images/2017 Honda Accord comp.jpg",
       type: "Compressor",
       make: "Honda",
@@ -201,7 +209,6 @@ const data = {
       price: 170000,
     },
     {
-      _id: "21",
       image: "/images/2017 Honda Accord valve.jpg",
       type: "Expansion valve",
       make: "Honda",
@@ -211,7 +218,6 @@ const data = {
       price: 10000,
     },
     {
-      _id: "22",
       image: "/images/2017 Land Rover Range Rover Evoque cabin.jpg",
       type: "Cabin filter",
       make: "Land Rover",
@@ -221,7 +227,6 @@ const data = {
       price: 17000,
     },
     {
-      _id: "23",
       image: "/images/2017 Land Rover Range Rover Evoque comp.jpg",
       type: "Compressor",
       make: "Land Rover",
@@ -231,7 +236,6 @@ const data = {
       price: 350000,
     },
     {
-      _id: "24",
       image: "/images/2017 Land Rover Range Rover Evoque valve.jpg",
       type: "Expansion valve",
       make: "Land Rover",
@@ -241,7 +245,6 @@ const data = {
       price: 14500,
     },
     {
-      _id: "25",
       image: "/images/bmw 2016 x6 evap.jpg",
       type: "Exaporator",
       make: "BMW",
@@ -251,7 +254,6 @@ const data = {
       price: 18000,
     },
     {
-      _id: "26",
       image: "/images/bmw 2016 x6.jpg",
       type: "Condenser",
       make: "BMW",
@@ -261,7 +263,6 @@ const data = {
       price: 19000,
     },
     {
-      _id: "27",
       image: "/images/ford edge 2011 evap.jpg",
       type: "Evaporator",
       make: "Ford",
@@ -271,7 +272,6 @@ const data = {
       price: 13000,
     },
     {
-      _id: "28",
       image: "/images/hyundai tucson 2013 evap.jpg",
       type: "Evaporator",
       make: "Hyundai",
@@ -281,7 +281,6 @@ const data = {
       price: 19000,
     },
     {
-      _id: "29",
       image: "/images/hyundai tucson 2017 cabin filter.jpg",
       type: "Cabin Filter",
       make: "Hyundai",
@@ -291,7 +290,6 @@ const data = {
       price: 800,
     },
     {
-      _id: "30",
       image: "/images/Hyundai tucson 2017 comp.jpg",
       type: "Compressor",
       make: "Hyundai",
@@ -301,7 +299,6 @@ const data = {
       price: 170000,
     },
     {
-      _id: "31",
       image: "/images/hyundai tucson 2017 cabin filter.jpg",
       type: "Cabin filter",
       make: "Hyundai",
@@ -311,7 +308,6 @@ const data = {
       price: 1400,
     },
     {
-      _id: "32",
       image: "/images/Hyundai tucson 2017 comp.jpg",
       type: "Compressor",
       make: "Hyundai",
@@ -321,7 +317,6 @@ const data = {
       price: 130000,
     },
     {
-      _id: "33",
       image: "/images/Hyundai Tucson 2017 evap.jpg",
       type: "Evaporator",
       make: "Hyundai",
@@ -331,7 +326,6 @@ const data = {
       price: 12000,
     },
     {
-      _id: "34",
       image: "/images/Hyundai Tucson 2017 valve.jpg",
       type: "Expansion valve",
       make: "Hyundai",
@@ -341,7 +335,6 @@ const data = {
       price: 11000,
     },
     {
-      _id: "35",
       image: "/images/kia rio 2014 evap.jpg",
       type: "Evaporator",
       make: "Kia",
@@ -351,7 +344,6 @@ const data = {
       price: 8000,
     },
     {
-      _id: "36",
       image: "/images/mazda 2012 cx7.jpg",
       type: "Condenser",
       make: "Mazda",
@@ -361,7 +353,6 @@ const data = {
       price: 16000,
     },
     {
-      _id: "37",
       image: "/images/mercedes 2015 glk350 valve.jpg",
       type: "Expansion valve",
       make: "Mercedes",
@@ -371,7 +362,6 @@ const data = {
       price: 25000,
     },
     {
-      _id: "38",
       image: "/images/mercedes 2015 glk350.jpg",
       type: "Condenser",
       make: "Mercedes",
@@ -381,7 +371,6 @@ const data = {
       price: 45000,
     },
     {
-      _id: "39",
       image: "/images/mercedes glk 2015 cabin.jpg",
       type: "Cabin Filter",
       make: "Mercedes",
@@ -391,7 +380,6 @@ const data = {
       price: 35000,
     },
     {
-      _id: "40",
       image: "/images/mercedes glk 2015 comp.jpg",
       type: "Compressor",
       make: "Mercedes",
@@ -401,7 +389,6 @@ const data = {
       price: 450000,
     },
     {
-      _id: "41",
       image: "/images/Toyota corolla 2008.jpg",
       type: "condenser",
       make: "Toyota",
@@ -411,7 +398,6 @@ const data = {
       price: 12000,
     },
     {
-      _id: "42",
       image: "/images/Toyota highlander 2010.jpg",
       type: "condenser",
       make: "Toyota",
@@ -421,7 +407,6 @@ const data = {
       price: 12500,
     },
     {
-      _id: "43",
       image: "/images/toyota venza 2016 cabin.jpg",
       type: "Cabin filter",
       make: "Toyota",
@@ -431,7 +416,6 @@ const data = {
       price: 12000,
     },
     {
-      _id: "44",
       image: "/images/Toyota venza 2016 comp.jpg",
       type: "Compressor",
       make: "Toyota",
@@ -441,7 +425,6 @@ const data = {
       price: 2000,
     },
     {
-      _id: "45",
       image: "/images/toyota venza 2016 valve.jpg",
       type: "Expansion valve",
       make: "Toyota",

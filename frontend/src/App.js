@@ -6,6 +6,7 @@ import SideNav from "./components/SideNav";
 import CartPage from "./pages/CartPage";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
+import SigninPage from "./pages/SigninPage";
 
 function App() {
   const categories = [
@@ -57,6 +58,7 @@ function App() {
         <main>
           <Route path="/cart/:id?" component={CartPage}></Route>
           <Route path="/product/:id" component={ProductPage}></Route>
+          <Route path="/signin" component={SigninPage}></Route>
           <Route path="/" component={HomePage} exact></Route>
         </main>
         <footer className="flex center-around">
