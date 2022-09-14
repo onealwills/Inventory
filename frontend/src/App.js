@@ -1,12 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import SideNav from "./components/SideNav";
-
 import CartPage from "./pages/CartPage";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
+import RegisterPage from "./pages/RegisterPage";
 import SigninPage from "./pages/SigninPage";
+import ShippingAddressPage from "./pages/ShippingAddressPage";
+import { signout } from "./actions/userActions";
+import PaymentPage from "./pages/PaymentPage";
 
 function App() {
   const categories = [
@@ -19,8 +22,17 @@ function App() {
     { _id: "7", type: "Cabin filter" },
   ];
 
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
+  const signoutHandler = (e) => {
+    e.preventDefault();
+    dispatch(signout());
+  };
   return (
     <BrowserRouter>
       <div className="grid-container">
@@ -49,7 +61,30 @@ function App() {
                 <span className="cart-badge">{cartItems.length}</span>
               )}
             </Link>
-            <Link to="/signin">Sign-in</Link>
+            {userInfo ? (
+              <div className="dropdown">
+                <Link to="#">
+                  {userInfo.name}
+                  <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/profile">User Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderhistory">Order History</Link>
+                  </li>
+                  <li>
+                    <Link to="#signout" onClick={signoutHandler}>
+                      Sign Out
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <Link to="/signin">Sign In</Link>
+            )}
+
             {/* <i className="fa fa-caret-down"></i> */}
           </div>
         </nav>
@@ -59,6 +94,9 @@ function App() {
           <Route path="/cart/:id?" component={CartPage}></Route>
           <Route path="/product/:id" component={ProductPage}></Route>
           <Route path="/signin" component={SigninPage}></Route>
+          <Route path="/register" component={RegisterPage}></Route>
+          <Route path="/shipping" component={ShippingAddressPage}></Route>
+          <Route path="/payment" component={PaymentPage}></Route>
           <Route path="/" component={HomePage} exact></Route>
         </main>
         <footer className="flex center-around">

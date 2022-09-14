@@ -1,52 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { signin } from "../actions/userActions";
+import { register } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 
-export default function SigninPage(props) {
+export default function RegisterPage(props) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  console.log("email >>>", email);
-  console.log("password >>>", password);
+  const [confirmpassword, setConfirmPassword] = useState("");
 
   const redirect = props.location.search
     ? props.location.search.split("=")[1]
     : "/";
 
-  const x = props.location.search;
-  const y = props.location.search.split("=")[1];
-  console.log("x and y >>>", x, y);
-
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo, loading, error } = userSignin;
-  console.log("userSignin>>>", userSignin);
+  const userRegister = useSelector((state) => state.userRegister);
+  const { userInfo, loading, error } = userRegister;
 
   const dispatch = useDispatch();
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (password !== confirmpassword) {
+      alert("baba your password no match");
+    } else {
+      dispatch(register(name, email, password));
+    }
+  };
 
   useEffect(() => {
     if (userInfo) {
       props.history.push(redirect);
     }
-  }, [props.history, redirect, userInfo]);
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(signin(email, password));
-  };
-
+  }, [props.history, userInfo, redirect]);
   return (
-    <div className="signin-container">
+    <div className="register-container">
       {loading && <LoadingBox></LoadingBox>}
       {error && <MessageBox type="danger">{error}</MessageBox>}
       <form className="form" onSubmit={submitHandler}>
-        <h3>Sigin in</h3>
+        <h3>Register Here bitch!</h3>
+        <div className="row">
+          <label className="name-label">Name</label>
+          <input
+            type="name"
+            placeholder="Enter your name werey!"
+            id="name"
+            required
+            onChange={(e) => setName(e.target.value)}
+          ></input>
+        </div>
         <div className="row">
           <label className="email-label">Email</label>
           <input
             type="email"
-            placeholder="Enter your email werey!"
+            placeholder="Enter your Email werey!"
             id="email"
             required
             onChange={(e) => setEmail(e.target.value)}
@@ -56,17 +63,27 @@ export default function SigninPage(props) {
           <label className="password-label">Password</label>
           <input
             type="password"
-            placeholder="Enter your fucking password!"
+            placeholder="Enter your password werey!"
             id="password"
             required
             onChange={(e) => setPassword(e.target.value)}
           ></input>
         </div>
         <div className="row">
+          <label className="confirmpassword-label">Password</label>
+          <input
+            type="password"
+            placeholder="Enter your password werey!"
+            id="confirmpassword"
+            required
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          ></input>
+        </div>
+        <div className="row">
           <div>
             <label />
-            <button className="signin-btn" type="submit">
-              Sign in
+            <button className="register-btn" type="submit">
+              Register
             </button>
           </div>
           <div>
