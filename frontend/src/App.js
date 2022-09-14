@@ -10,6 +10,7 @@ import SigninPage from "./pages/SigninPage";
 import ShippingAddressPage from "./pages/ShippingAddressPage";
 import { signout } from "./actions/userActions";
 import PaymentPage from "./pages/PaymentPage";
+import PlaceOrderPage from "./pages/PlaceOrderPage";
 
 function App() {
   const categories = [
@@ -22,15 +23,14 @@ function App() {
     { _id: "7", type: "Cabin filter" },
   ];
 
-  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
-  const signoutHandler = (e) => {
-    e.preventDefault();
+  const dispatch = useDispatch();
+  const signoutHandler = () => {
     dispatch(signout());
   };
   return (
@@ -97,6 +97,7 @@ function App() {
           <Route path="/register" component={RegisterPage}></Route>
           <Route path="/shipping" component={ShippingAddressPage}></Route>
           <Route path="/payment" component={PaymentPage}></Route>
+          <Route path="/placeorder" component={PlaceOrderPage}></Route>
           <Route path="/" component={HomePage} exact></Route>
         </main>
         <footer className="flex center-around">
