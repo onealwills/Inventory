@@ -15,11 +15,17 @@ export default function ShippingAddressPage(props) {
     props.history.push("/signin");
   }
 
-  const [name, setName] = useState(shippingAddress.name);
-  const [address, setAddress] = useState(shippingAddress.address);
-  const [city, setCity] = useState(shippingAddress.city);
-  const [postalcode, setPostalcode] = useState(shippingAddress.postalcode);
-  const [country, setCountry] = useState(shippingAddress.country);
+  const [name, setName] = useState(shippingAddress ? shippingAddress.name : "");
+  const [address, setAddress] = useState(
+    shippingAddress ? shippingAddress.address : ""
+  );
+  const [city, setCity] = useState(shippingAddress ? shippingAddress.city : "");
+  const [postalcode, setPostalcode] = useState(
+    shippingAddress ? shippingAddress.postalcode : ""
+  );
+  const [country, setCountry] = useState(
+    shippingAddress ? shippingAddress.country : ""
+  );
 
   const dispatch = useDispatch();
 

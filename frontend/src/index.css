@@ -635,3 +635,55 @@ footer {
   height: 1rem;
   width: 1rem;
 }
+/* placeorderpage */
+.placeorder-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.column-1 {
+  /* border: red 2px solid; */
+  flex: 2 1 50rem;
+  padding: 1rem;
+}
+.column-2 {
+  flex: 1 1 25rem;
+  /* border: black 2px solid; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+
+  /* box-shadow: 0px 8px 16px 0px #8e2de2; */
+}
+.shipping-info {
+  /* border: red 2px solid; */
+  margin-top: 1rem;
+  /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+}
+.payment-method {
+  /* border: red 2px solid; */
+  margin-top: 1rem;
+  /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+}
+.order-items {
+  /* border: red 2px solid; */
+  margin-top: 1rem;
+}
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.column-2 {
+  /* border: red 2px solid; */
+  margin-top: 1rem;
+}
+.placeorder-btn {
+  border: none;
+  background-color: #8e2de2;
+  height: 2rem;
+  width: 100%;
+  border-bottom: 0px;
+  cursor: pointer;
+  border-radius: 0.2rem;
+}
