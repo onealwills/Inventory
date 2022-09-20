@@ -20,8 +20,8 @@ export default function ShippingAddressPage(props) {
     shippingAddress ? shippingAddress.address : ""
   );
   const [city, setCity] = useState(shippingAddress ? shippingAddress.city : "");
-  const [postalcode, setPostalcode] = useState(
-    shippingAddress ? shippingAddress.postalcode : ""
+  const [postalCode, setPostalCode] = useState(
+    shippingAddress ? shippingAddress.postalCode : ""
   );
   const [country, setCountry] = useState(
     shippingAddress ? shippingAddress.country : ""
@@ -32,7 +32,7 @@ export default function ShippingAddressPage(props) {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    dispatch(saveShippingAddress({ name, address, city, country, postalcode }));
+    dispatch(saveShippingAddress({ name, address, city, country, postalCode }));
     props.history.push("/payment");
   };
 
@@ -81,8 +81,8 @@ export default function ShippingAddressPage(props) {
             placeholder="Postalcode"
             id="postalcode"
             required
-            value={postalcode}
-            onChange={(e) => setPostalcode(e.target.value)}
+            value={postalCode}
+            onChange={(e) => setPostalCode(e.target.value)}
           ></input>
         </div>
         <div className="row">

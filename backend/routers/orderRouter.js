@@ -1,9 +1,10 @@
 import express from "express";
 import Order from "../models/orderModel.js";
+import { isAuth } from "../utils.js";
 
 const orderRouter = express.Router();
 
-orderRouter.post("/", async (req, res) => {
+orderRouter.post("/", isAuth, async (req, res) => {
   if (req.body.orderItems.length === 0) {
     res.status(400).send({ message: "cart empty" });
   } else {
@@ -21,4 +22,14 @@ orderRouter.post("/", async (req, res) => {
   }
 });
 
+orderRouter.get("/:id", isAuth, async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  console.log("order>>>", req.params.id);
+  if (order) {
+    res.send(order);
+  } else {
+    res.status(404).send({ message: "order not found" });
+  }
+  console.log("res>>>", order);
+});
 export default orderRouter;

@@ -11,6 +11,7 @@ import ShippingAddressPage from "./pages/ShippingAddressPage";
 import { signout } from "./actions/userActions";
 import PaymentPage from "./pages/PaymentPage";
 import PlaceOrderPage from "./pages/PlaceOrderPage";
+import OrderPage from "./pages/OrderPage";
 
 function App() {
   const categories = [
@@ -98,6 +99,7 @@ function App() {
           <Route path="/shipping" component={ShippingAddressPage}></Route>
           <Route path="/payment" component={PaymentPage}></Route>
           <Route path="/placeorder" component={PlaceOrderPage}></Route>
+          <Route path="/order/:id" component={OrderPage}></Route>
           <Route path="/" component={HomePage} exact></Route>
         </main>
         <footer className="flex center-around">

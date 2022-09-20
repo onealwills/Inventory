@@ -4,15 +4,20 @@ const orderSchema = new mongoose.Schema(
   {
     orderItems: [
       {
-        name: { type: String, required: true },
-        qty: { type: Number, required: true },
+        // name: { type: String, required: true },
         image: { type: String, required: true },
+        type: { type: String, required: true },
+        make: { type: String, required: true },
+        model: { type: String, required: true },
+        year: { type: String, required: true },
+        qty: { type: Number, required: true },
         price: { type: Number, required: true },
         product: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Product",
           required: true,
         },
+        qty: { type: Number, required: true },
       },
     ],
     shippingAddress: {
