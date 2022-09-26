@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { detailsOrder } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+// import FlutterWaveBtn from "../components/FlutterWaveBtn";
+import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 
 export default function OrderPage(props) {
   const orderId = props.match.params.id;
@@ -42,6 +44,33 @@ export default function OrderPage(props) {
 
   const successPaymentHnadler = () => {
     // TODO: dispatch pay order
+  };
+
+  const config = {
+    public_key: "FLWPUBK-cdbc641cbba9ad351add658385e19307-X",
+    tx_ref: Date.now(),
+    amount: order ? order.totalPrice : 0,
+    currency: "NGN",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: "user@gmail.com",
+      phone_number: "070********",
+      name: "john doe",
+    },
+    customizations: {
+      title: "My store",
+      description: "Payment for items in cart",
+      logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+    },
+  };
+  const fwConfig = {
+    ...config,
+    text: "Pay with Flutterwave!",
+    callback: (response) => {
+      console.log(response);
+      closePaymentModal(); // this will close the modal programmatically
+    },
+    onClose: () => {},
   };
 
   return loading ? (
@@ -151,6 +180,13 @@ export default function OrderPage(props) {
               )}
             </div>
           )}
+          <div>
+            {!order.isPaid && (
+              <div>
+                <FlutterWaveButton {...fwConfig} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
