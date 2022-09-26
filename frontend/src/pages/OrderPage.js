@@ -51,11 +51,12 @@ export default function OrderPage(props) {
     tx_ref: Date.now(),
     amount: order ? order.totalPrice : 0,
     currency: "NGN",
+
     payment_options: "card,mobilemoney,ussd",
     customer: {
-      email: "user@gmail.com",
-      phone_number: "070********",
-      name: "john doe",
+      email: "oneal.wills@gmail.com",
+      phone_number: "07033475563",
+      name: "oneal wills",
     },
     customizations: {
       title: "My store",
@@ -66,8 +67,8 @@ export default function OrderPage(props) {
   const fwConfig = {
     ...config,
     text: "Pay with Flutterwave!",
-    callback: (response) => {
-      console.log(response);
+    callback: (res) => {
+      console.log("flutterwave response>>>", res);
       closePaymentModal(); // this will close the modal programmatically
     },
     onClose: () => {},
@@ -183,7 +184,7 @@ export default function OrderPage(props) {
           <div>
             {!order.isPaid && (
               <div>
-                <FlutterWaveButton {...fwConfig} />
+                <FlutterWaveButton className="fluuterwave-btn" {...fwConfig} />
               </div>
             )}
           </div>

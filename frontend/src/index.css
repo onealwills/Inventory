@@ -711,3 +711,11 @@ footer {
   width: 700px;
   margin-top: 1rem;
 }
+.fluuterwave-btn {
+  width: 100%;
+  border: none;
+  height: 3rem;
+  background-color: #8e2de2;
+  color: white;
+  border-radius: 0.2rem;
+}
