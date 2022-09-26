@@ -687,3 +687,7 @@ footer {
   cursor: pointer;
   border-radius: 0.2rem;
 }
+.order-container {
+  display: flex;
+  flex-wrap: wrap;
+}
