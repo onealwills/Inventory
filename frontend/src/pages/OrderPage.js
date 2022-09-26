@@ -184,7 +184,7 @@ export default function OrderPage(props) {
           <div>
             {!order.isPaid && (
               <div>
-                <FlutterWaveButton className="fluuterwave-btn" {...fwConfig} />
+                <FlutterWaveButton className="flutterwave-btn" {...fwConfig} />
               </div>
             )}
           </div>
