@@ -24,12 +24,12 @@ orderRouter.post("/", isAuth, async (req, res) => {
 
 orderRouter.get("/:id", isAuth, async (req, res) => {
   const order = await Order.findById(req.params.id);
-  console.log("order>>>", req.params.id);
+  // console.log("order>>>", req.params.id);
   if (order) {
     res.send(order);
   } else {
     res.status(404).send({ message: "order not found" });
   }
-  console.log("res>>>", order);
+  // console.log("res>>>", order);
 });
 export default orderRouter;

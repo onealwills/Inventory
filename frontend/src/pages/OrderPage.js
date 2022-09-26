@@ -1,5 +1,6 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
+import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { detailsOrder } from "../actions/orderActions";
@@ -39,6 +40,10 @@ export default function OrderPage(props) {
     }
   }, [dispatch, order, orderId, sdkReady]);
 
+  const successPaymentHnadler = () => {
+    // TODO: dispatch pay order
+  };
+
   return loading ? (
     <LoadingBox></LoadingBox>
   ) : error ? (
@@ -77,8 +82,8 @@ export default function OrderPage(props) {
           <h2>Order Items</h2>
           <ul>
             {order.orderItems.map((item) => (
-              <li key={item.product}>
-                <div>
+              <div key={item.product}>
+                <div className="justify">
                   <div>
                     <img
                       src={item.image}
@@ -87,14 +92,18 @@ export default function OrderPage(props) {
                     ></img>
                   </div>
                   <div>
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    <Link to={`/product/${item.product}`}>
+                      {item.type}-{item.make}-{item.model}
+                    </Link>
                   </div>
 
                   <div>
-                    {item.qty} x ${item.price} = ${item.qty * item.price}
+                    {item.qty} x <span>&#8358;</span>
+                    {item.price} = <span>&#8358;</span>
+                    {item.qty * item.price}
                   </div>
                 </div>
-              </li>
+              </div>
             ))}
           </ul>
         </div>
@@ -102,15 +111,18 @@ export default function OrderPage(props) {
         <div></div>
       </div>
       <div className="column-2">
-        <div className="card card-body">
-          <div>
+        <div className="card">
+          <div className="content">
             <div>
               <h2>Order Summary</h2>
             </div>
             <div>
               <div>
                 <div>Items</div>
-                <div>${order.itemsPrice.toFixed(2)}</div>
+                <div>
+                  <span>&#8358;</span>
+                  {order.itemsPrice.toFixed(2)}
+                </div>
               </div>
             </div>
             <div>
@@ -119,11 +131,26 @@ export default function OrderPage(props) {
                   <strong> Order Total</strong>
                 </div>
                 <div>
-                  <strong>${order.totalPrice.toFixed(2)}</strong>
+                  <strong>
+                    <span>&#8358;</span>
+                    {order.totalPrice.toFixed(2)}
+                  </strong>
                 </div>
               </div>
             </div>
           </div>
+          {!order.isPaid && (
+            <div>
+              {!sdkReady ? (
+                <LoadingBox></LoadingBox>
+              ) : (
+                <PayPalButton
+                  amount={order.totalPrice}
+                  onSuccess={successPaymentHnadler}
+                ></PayPalButton>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
