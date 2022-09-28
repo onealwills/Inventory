@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { detailsOrder } from "../actions/orderActions";
+import { detailsOrder, payOrder } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 // import FlutterWaveBtn from "../components/FlutterWaveBtn";
 import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
+import { ORDER_PAY_RESET } from "../constants/orderConstants";
 
 export default function OrderPage(props) {
   const orderId = props.match.params.id;
@@ -17,6 +18,12 @@ export default function OrderPage(props) {
   console.log("orderDetails>>>", orderDetails);
   const dispatch = useDispatch();
 
+  const orderPay = useSelector((state) => state.orderPay);
+  const {
+    loading: loadingPay,
+    error: errorPay,
+    success: successPay,
+  } = orderPay;
   useEffect(() => {
     const addPayPalScript = async () => {
       const { data } = await Axios.get("/api/config/paypal");
@@ -29,7 +36,8 @@ export default function OrderPage(props) {
       };
       document.body.appendChild(script);
     };
-    if (!order) {
+    if (!order || successPay || (order && order._id !== orderId)) {
+      dispatch({ type: ORDER_PAY_RESET });
       dispatch(detailsOrder(orderId));
     } else {
       if (!order.isPaid) {
@@ -40,9 +48,10 @@ export default function OrderPage(props) {
         }
       }
     }
-  }, [dispatch, order, orderId, sdkReady]);
+  }, [dispatch, order, orderId, sdkReady, successPay]);
 
-  const successPaymentHnadler = () => {
+  const successPaymentHandler = (paymentResult) => {
+    dispatch(payOrder(order, paymentResult));
     // TODO: dispatch pay order
   };
 
@@ -174,10 +183,17 @@ export default function OrderPage(props) {
               {!sdkReady ? (
                 <LoadingBox></LoadingBox>
               ) : (
-                <PayPalButton
-                  amount={order.totalPrice}
-                  onSuccess={successPaymentHnadler}
-                ></PayPalButton>
+                <>
+                  {errorPay && (
+                    <MessageBox variant="danger">{errorPay}</MessageBox>
+                  )}
+                  {loadingPay && <LoadingBox></LoadingBox>}
+
+                  <PayPalButton
+                    amount={order.totalPrice}
+                    onSuccess={successPaymentHandler}
+                  ></PayPalButton>
+                </>
               )}
             </div>
           )}

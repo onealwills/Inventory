@@ -64,7 +64,7 @@ export const payOrder =
     } = getState();
     try {
       const { data } = await Axios.post(
-        `/api/orders/${order.id}/pay`,
+        `/api/orders/${order._id}/pay`,
         paymentResult,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
