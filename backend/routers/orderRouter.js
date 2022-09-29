@@ -4,6 +4,11 @@ import { isAuth } from "../utils.js";
 
 const orderRouter = express.Router();
 
+orderRouter.get("/mine", isAuth, async (req, res) => {
+  const orders = await Order.find({ user: req.user._id });
+  res.send(orders);
+});
+
 orderRouter.post("/", isAuth, async (req, res) => {
   if (req.body.orderItems.length === 0) {
     res.status(400).send({ message: "cart empty" });
@@ -53,4 +58,5 @@ orderRouter.post("/:id/pay", async (req, res) => {
     res.status(404).send({ message: "Order not found" });
   }
 });
+
 export default orderRouter;
