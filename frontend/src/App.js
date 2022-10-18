@@ -14,6 +14,9 @@ import PlaceOrderPage from "./pages/PlaceOrderPage";
 import OrderPage from "./pages/OrderPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import ProfilePage from "./pages/ProfilePage";
+import PrivateRoute from "./components/PrivateRoute";
+import AdminRoute from "./components/AdminRoute";
+import ProductListPage from "./pages/ProductListPage";
 
 function App() {
   const categories = [
@@ -87,6 +90,45 @@ function App() {
             ) : (
               <Link to="/signin">Sign In</Link>
             )}
+            {userInfo && userInfo.isAdmin && (
+              <div className="dropdown">
+                <Link to="#admin">
+                  Admin <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/productlist">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist">Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/userlist">Users</Link>
+                  </li>
+                </ul>
+              </div>
+            )}
+            {userInfo && userInfo.isStockKeeper && (
+              <div className="dropdown">
+                <Link to="#">Stock Keeper</Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/profile">User Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderhistory">Order History</Link>
+                  </li>
+                  <li>
+                    <Link to="#signout" onClick={signoutHandler}>
+                      Sign Out
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            )}
 
             {/* <i className="fa fa-caret-down"></i> */}
           </div>
@@ -95,7 +137,7 @@ function App() {
 
         <main>
           <Route path="/cart/:id?" component={CartPage}></Route>
-          <Route path="/product/:id" component={ProductPage}></Route>
+          <Route path="/product/:id" component={ProductPage} exact></Route>
           <Route path="/signin" component={SigninPage}></Route>
           <Route path="/register" component={RegisterPage}></Route>
           <Route path="/shipping" component={ShippingAddressPage}></Route>
@@ -103,7 +145,11 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderPage}></Route>
           <Route path="/order/:id" component={OrderPage}></Route>
           <Route path="/orderhistory" component={OrderHistoryPage}></Route>
-          <Route path="/profile" component={ProfilePage}></Route>
+          <PrivateRoute path="/profile" component={ProfilePage}></PrivateRoute>
+          <AdminRoute
+            path="/productlist"
+            component={ProductListPage}
+          ></AdminRoute>
           <Route path="/" component={HomePage} exact></Route>
         </main>
         <footer className="flex center-around">

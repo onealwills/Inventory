@@ -37,3 +37,27 @@ export const isAuth = (req, res, next) => {
     res.status(401).send({ message: "No token" });
   }
 };
+
+export const isAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401).send({ message: "Invalid admin token" });
+  }
+};
+
+export const isStockKeeper = (req, res, next) => {
+  if (req.user && req.user.isStockKeeper) {
+    next();
+  } else {
+    res.status(401).status({ message: "Invalid Stock keeper token" });
+  }
+};
+
+export const isStockKeeperOrAdmin = (req, res, next) => {
+  if (req.user && (req.user.isStockKeeper || req.user.isAdmin)) {
+    next();
+  } else {
+    res.status(401).send({ message: "Invalid Admin/Stock Keeper Token" });
+  }
+};

@@ -39,8 +39,8 @@ orderRouter.get("/:id", isAuth, async (req, res) => {
 });
 
 orderRouter.post("/:id/pay", async (req, res) => {
-  console.log("id pay>>>", req.params.id);
-  console.log("req body id>>>", req.body.id);
+  // console.log("id pay>>>", req.params.id);
+  // console.log("req body id>>>", req.body.id);
 
   const order = await Order.findById(req.params.id);
   if (order) {

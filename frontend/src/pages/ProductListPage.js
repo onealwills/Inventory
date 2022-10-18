@@ -1,0 +1,99 @@
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createProduct, listProducts } from "../actions/productActions";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
+
+export default function ProductListPage(props) {
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
+
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    success: successCreate,
+    error: errorCreate,
+    product: createdProduct,
+  } = productCreate;
+  console.log("created product >>>", createdProduct);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (successCreate) {
+      dispatch({ type: PRODUCT_CREATE_RESET });
+      props.history.push(`/product/${createdProduct._id}/edit`);
+    }
+    dispatch(listProducts());
+  }, [dispatch, createdProduct, props.history, successCreate]);
+
+  const deleteHandler = () => {
+    // to delete
+  };
+
+  const createHandler = () => {
+    dispatch(createProduct());
+  };
+  return (
+    <div>
+      <div>
+        <h1>Product list</h1>
+        <button type="button" className="add-product" onClick={createHandler}>
+          {" "}
+          Add Product<i className="fa fa-plus"></i>
+        </button>
+      </div>
+      {loadingCreate && <LoadingBox></LoadingBox>}
+      {errorCreate && <MessageBox type="danger">{errorCreate}</MessageBox>}
+      {loading ? (
+        <LoadingBox></LoadingBox>
+      ) : error ? (
+        <MessageBox type="danger">{error}</MessageBox>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>TYPE</th>
+              <th>MAKE</th>
+              <th>MODEL</th>
+              <th>YEAR</th>
+              <th>QTY</th>
+              <th>PRICE</th>
+              <th>action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product._id}>
+                <td>{product._id}</td>
+                <td>{product.type}</td>
+                <td>{product.make}</td>
+                <td>{product.model}</td>
+                <td>{product.year}</td>
+                <td>{product.qty}</td>
+                <td>{product.price}</td>
+                <td>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      props.history.push(`product/${product._id}/edit`)
+                    }
+                  >
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <button type="button" onClick={() => deleteHandler(product)}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}

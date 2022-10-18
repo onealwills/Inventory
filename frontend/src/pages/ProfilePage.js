@@ -1,24 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { detailsUser } from "../actions/userActions";
+import { detailsUser, updateUserProfile } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userContants";
 
 export default function ProfilePage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const userSignin = useSelector((state) => state.userSignin);
   console.log("usersignin for proffile page >>>", userSignin);
   const { userInfo } = userSignin;
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const {
+    success: successUpdate,
+    error: errorUpdate,
+    loading: loadingUpdate,
+  } = userUpdateProfile;
+  console.log("user update profile>>>>", userUpdateProfile);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(detailsUser(userInfo._id));
-  }, [dispatch, userInfo._id]);
+    if (!user) {
+      dispatch({ type: USER_UPDATE_PROFILE_RESET });
+      dispatch(detailsUser(userInfo._id));
+    } else {
+      setName(user.name);
+      setEmail(user.email);
+    }
+  }, [dispatch, userInfo._id, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      alert("your shitty passwords do not match");
+    } else {
+      dispatch(updateUserProfile({ userId: user._id, name, email, password }));
+    }
   };
 
   return (
@@ -32,59 +57,74 @@ export default function ProfilePage() {
         ) : error ? (
           <MessageBox type="danger">{error}</MessageBox>
         ) : (
-          <div>
-            <div className="row">
-              <label htmlFor="name" className="name-label">
-                Name
-              </label>
-              <input
-                type="text"
-                placeholder="put your f** name"
-                id="name"
-                value={user.name}
-              ></input>
+          <>
+            {loadingUpdate && <LoadingBox></LoadingBox>}
+            {errorUpdate && (
+              <MessageBox type="danger">{errorUpdate}</MessageBox>
+            )}
+            {successUpdate && (
+              <MessageBox type="success">
+                Profile Updated Successfully
+              </MessageBox>
+            )}
+            <div>
+              <div className="row">
+                <label htmlFor="name" className="name-label">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="put your f** name"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                ></input>
+              </div>
+              <div className="row">
+                <label htmlFor="Email" className="email-label">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  placeholder="your Email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                ></input>
+              </div>
+              <div className="row">
+                <label htmlFor="password" className="password-label">
+                  password
+                </label>
+                <input
+                  type="password"
+                  placeholder="shitty password"
+                  id="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                ></input>
+              </div>
+              <div className="row">
+                <label
+                  htmlFor="confirmpassword"
+                  className="confirmpassword-label"
+                >
+                  password
+                </label>
+                <input
+                  type="password"
+                  placeholder="shitty password"
+                  id="confirmpassword"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                ></input>
+              </div>
+              <div className="row">
+                <label />
+                <button type="submit" className="update-btn">
+                  update
+                </button>
+              </div>
             </div>
-            <div className="row">
-              <label htmlFor="Email" className="email-label">
-                Email
-              </label>
-              <input
-                type="email"
-                placeholder="your Email"
-                id="email"
-                value={user.email}
-              ></input>
-            </div>
-            <div className="row">
-              <label htmlFor="password" className="password-label">
-                password
-              </label>
-              <input
-                type="password"
-                placeholder="shitty password"
-                id="password"
-              ></input>
-            </div>
-            <div className="row">
-              <label
-                htmlFor="confirmpassword"
-                className="confirmpassword-label"
-              >
-                password
-              </label>
-              <input
-                type="password"
-                placeholder="shitty password"
-                id="confirmpassword"
-              ></input>
-            </div>
-            <div className="row">
-              <label />
-              <button type="submit" className="update-btn">
-                update
-              </button>
-            </div>
-          </div>
+          </>
         )}
       </form>
     </div>

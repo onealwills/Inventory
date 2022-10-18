@@ -16,9 +16,9 @@ export default function HomePage() {
   }, [dispatch]);
   return (
     <div className="table-container">
-      <button className="add-product">
+      {/* <button className="add-product">
         Add Product<i className="fa fa-plus"></i>
-      </button>
+      </button> */}
       <table className="table">
         <thead>
           <tr>
