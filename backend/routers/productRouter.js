@@ -45,4 +45,21 @@ productRouter.post("/", isAuth, isStockKeeperOrAdmin, async (req, res) => {
   res.status(201).send({ message: "product created", product: createdProduct });
 });
 
+productRouter.put("/:id", isAuth, async (req, res) => {
+  const productId = req.params.id;
+  const product = await Product.findById(productId);
+  if (product) {
+    product.image = req.body.image;
+    product.type = req.body.type;
+    product.make = req.body.make;
+    product.model = req.body.model;
+    product.year = req.body.year;
+    product.stockQty = req.body.stockQty;
+    product.price = req.body.price;
+    const updatedProduct = await product.save();
+    res.send({ message: "updated product", product: updatedProduct });
+  } else {
+    res.status(404).send({ message: "Product Not Found" });
+  }
+});
 export default productRouter;
