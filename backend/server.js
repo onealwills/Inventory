@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import userRouter from "./routers/userRouter.js";
 import productRouter from "./routers/productRouter.js";
 import orderRouter from "./routers/orderRouter.js";
+import uploadRouter from "./routers/uploadRouter.js";
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,7 @@ mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/inventory", {
   useCreateIndex: true,
 });
 
+app.use("/api/uploads", uploadRouter);
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
@@ -36,10 +38,13 @@ app.use((err, req, res, next) => {
 });
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dir_name = dirname(__filename);
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dir_name, "public")));
 app.use("/static", express.static("public"));
+
+const __dirname = path.resolve();
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

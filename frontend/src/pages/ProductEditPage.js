@@ -1,3 +1,4 @@
+import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { detailsProduct, updateProduct } from "../actions/productActions";
@@ -61,6 +62,33 @@ export default function ProductEditPage(props) {
       })
     );
   };
+
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [errorUpload, setErrorUpload] = useState("");
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const bodyFormData = new FormData();
+    bodyFormData.append("image", file);
+    setLoadingUpload(true);
+    try {
+      const { data } = await Axios.post("/api/uploads", bodyFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+
+      setImage(data);
+      setLoadingUpload(false);
+    } catch (error) {
+      setErrorUpload(error.message);
+      setLoadingUpload(false);
+    }
+  };
   return (
     <div className="productEdit-container">
       <form className="form" onSubmit={submitHandler}>
@@ -84,6 +112,21 @@ export default function ProductEditPage(props) {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></input>
+            </div>
+            <div className="row">
+              <label htmlFor="image-File" className="image-label">
+                Image
+              </label>
+              <input
+                id="imageF?ile"
+                label="choose image ode"
+                type="file"
+                onChange={uploadFileHandler}
+              ></input>
+              {loadingUpload && <LoadingBox></LoadingBox>}
+              {errorUpload && (
+                <MessageBox type="danger">{errorUpload}</MessageBox>
+              )}
             </div>
             <div className="row">
               <label htmlFor="type" className="type-label">
