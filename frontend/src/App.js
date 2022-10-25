@@ -18,6 +18,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import AdminRoute from "./components/AdminRoute";
 import ProductListPage from "./pages/ProductListPage";
 import ProductEditPage from "./pages/ProductEditPage";
+import OrderListPage from "./pages/OrderListPage";
 
 function App() {
   const categories = [
@@ -156,6 +157,7 @@ function App() {
             path="/productlist"
             component={ProductListPage}
           ></AdminRoute>
+          <AdminRoute path="/orderlist" component={OrderListPage}></AdminRoute>
           <Route path="/" component={HomePage} exact></Route>
         </main>
         <footer className="flex center-around">

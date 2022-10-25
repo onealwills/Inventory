@@ -1,6 +1,11 @@
 import express from "express";
 import Order from "../models/orderModel.js";
-import { isAuth } from "../utils.js";
+import {
+  isAdmin,
+  isAuth,
+  isStockKeeper,
+  isStockKeeperOrAdmin,
+} from "../utils.js";
 
 const orderRouter = express.Router();
 
@@ -57,6 +62,11 @@ orderRouter.post("/:id/pay", async (req, res) => {
   } else {
     res.status(404).send({ message: "Order not found" });
   }
+});
+
+orderRouter.get("/", isAuth, isAdmin, async (req, res) => {
+  const orders = await Order.find({}).populate("user", "name");
+  res.send(orders);
 });
 
 export default orderRouter;

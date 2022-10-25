@@ -491,6 +491,11 @@ footer {
   width: 300px;
   height: 49px;
 }
+#imageFile {
+  border: #8e2de2 1px solid;
+  width: 300px;
+  height: 49px;
+}
 #type {
   border: #8e2de2 1px solid;
   width: 300px;
@@ -803,7 +808,7 @@ footer {
 .productEdit-container {
   margin: 0 auto;
   margin-top: 5rem;
-  height: 700px;
+  height: 870px;
   width: 450px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
@@ -881,4 +886,19 @@ footer {
   border-bottom-left-radius: 0.3rem;
   /* border: red 2px solid; */
   background-color: #8e2de2;
+}
+.orderlist-container {
+  display: flex;
+}
+.orderlist-table {
+  margin: 0 auto;
+}
+.orderlist-btn {
+  border: none;
+  background-color: #8e2de2;
+  color: white;
+  border-radius: 0.3rem;
+  height: 2rem;
+  width: 4rem;
+  cursor: pointer;
 }

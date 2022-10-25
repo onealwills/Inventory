@@ -118,7 +118,7 @@ export default function ProductEditPage(props) {
                 Image
               </label>
               <input
-                id="imageF?ile"
+                id="imageFile"
                 label="choose image ode"
                 type="file"
                 onChange={uploadFileHandler}
