@@ -69,4 +69,14 @@ orderRouter.get("/", isAuth, isAdmin, async (req, res) => {
   res.send(orders);
 });
 
+orderRouter.delete("/:id", isAuth, isAdmin, async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (order) {
+    const deleteOrder = order.remove();
+    res.send({ message: "order deleted", order: deleteOrder });
+  } else {
+    res.send({ message: "order not found" });
+  }
+});
+
 export default orderRouter;
