@@ -1,23 +1,45 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listUsers } from "../actions/userActions";
+import { deleteUser, listUsers } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { USER_DETAILS_RESET } from "../constants/userContants";
 
 export default function UserListPage() {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
   console.log("users list >>>", users);
 
+  const userDelete = useSelector((state) => state.userDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = userDelete;
+  console.log("loading delete >>>", userDelete);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(listUsers());
-  }, [dispatch]);
+    dispatch({
+      type: USER_DETAILS_RESET,
+    });
+  }, [dispatch, successDelete]);
 
+  const deleteHandler = (user) => {
+    if (window.confirm("you really wann delete that asshole")) {
+      dispatch(deleteUser(user._id));
+    }
+  };
   return (
     <div>
       <h1>Users List</h1>
+      {loadingDelete && <LoadingBox></LoadingBox>}
+      {errorDelete && <MessageBox type="danger">{errorDelete}</MessageBox>}
+      {successDelete && (
+        <MessageBox type="success">User Deleted Successfully</MessageBox>
+      )}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -47,7 +69,11 @@ export default function UserListPage() {
                   <button type="button" className="userlist-btn">
                     Edit
                   </button>
-                  <button type="button" className="userlist-btn">
+                  <button
+                    type="button"
+                    className="userlist-btn"
+                    onClick={() => deleteHandler(user)}
+                  >
                     Delete
                   </button>
                 </td>

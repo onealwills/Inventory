@@ -2,7 +2,12 @@ import express from "express";
 import data from "../data.js";
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
-import { generateToken, isAuth } from "../utils.js";
+import {
+  generateToken,
+  isAdmin,
+  isAuth,
+  isStockKeeperOrAdmin,
+} from "../utils.js";
 
 const userRouter = express.Router();
 
@@ -85,5 +90,23 @@ userRouter.put("/profile", isAuth, async (req, res) => {
 userRouter.get("/", async (req, res) => {
   const users = await User.find({});
   res.send(users);
+});
+
+userRouter.delete("/:id", isAuth, isAdmin, async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    if (user.email === "SuperAdmin@example.com") {
+      res.status(400).send({ message: "cannot delete super admin" });
+      return;
+    }
+    if (user.email === "Admin@example.com") {
+      res.status(400).send({ message: "cannot delete admin" });
+      return;
+    }
+    const deleteUser = await user.remove();
+    res.send({ message: "user deleted", user: deleteUser });
+  } else {
+    res.status(404).send({ message: "user not found" });
+  }
 });
 export default userRouter;
