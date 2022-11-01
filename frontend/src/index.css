@@ -902,3 +902,22 @@ footer {
   width: 4rem;
   cursor: pointer;
 }
+.deliver-btn {
+  width: 90%;
+  margin: 0.5rem;
+  border: none;
+  height: 3rem;
+  background-color: #8e2de2;
+  color: white;
+  border-radius: 0.2rem;
+}
+
+.userlist-btn {
+  border: none;
+  background-color: #8e2de2;
+  color: white;
+  border-radius: 0.3rem;
+  height: 2rem;
+  width: 4rem;
+  cursor: pointer;
+}

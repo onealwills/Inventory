@@ -79,4 +79,16 @@ orderRouter.delete("/:id", isAuth, isAdmin, async (req, res) => {
   }
 });
 
+orderRouter.put("/:id/deliver", isAuth, async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+    const updatedOrder = await order.save();
+    res.send({ message: "order delivered", order: updatedOrder });
+  } else {
+    res.status(404).send({ message: "order not found" });
+  }
+});
+
 export default orderRouter;
