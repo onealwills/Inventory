@@ -5,7 +5,7 @@ import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { USER_DETAILS_RESET } from "../constants/userContants";
 
-export default function UserListPage() {
+export default function UserListPage(props) {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
   console.log("users list >>>", users);
@@ -66,7 +66,11 @@ export default function UserListPage() {
                 <td>{user.isAdmin ? "YES" : "NO"}</td>
                 <td>{user.isStockKeeper ? "YES" : "NO"}</td>
                 <td>
-                  <button type="button" className="userlist-btn">
+                  <button
+                    type="button"
+                    className="userlist-btn"
+                    onClick={() => props.history.push(`/user/${user._id}/edit`)}
+                  >
                     Edit
                   </button>
                   <button

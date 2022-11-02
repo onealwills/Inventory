@@ -109,4 +109,20 @@ userRouter.delete("/:id", isAuth, isAdmin, async (req, res) => {
     res.status(404).send({ message: "user not found" });
   }
 });
+
+userRouter.put("/:id", isAuth, isAdmin, async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    user.name = req.user.name || user.name;
+    user.email = req.user.email || user.email;
+    user.isSuperAdmin = req.user.isSuperAdmin || user.isSuperAdmin;
+    user.isAdmin = req.user.isAdmin || user.isAdmin;
+    user.isStockKeeper = req.user.isStockKeeper || user.isStockKeeper;
+
+    const updateUser = await user.save();
+    res.send({ message: "user updated", user: updateUser });
+  } else {
+    res.status(404).send({ message: "user not found" });
+  }
+});
 export default userRouter;

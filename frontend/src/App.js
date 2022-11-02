@@ -20,6 +20,7 @@ import ProductListPage from "./pages/ProductListPage";
 import ProductEditPage from "./pages/ProductEditPage";
 import OrderListPage from "./pages/OrderListPage";
 import UserListPage from "./pages/UserListPage";
+import UserEditPage from "./pages/UserEditPage";
 
 function App() {
   const categories = [
@@ -160,6 +161,10 @@ function App() {
           ></AdminRoute>
           <AdminRoute path="/orderlist" component={OrderListPage}></AdminRoute>
           <AdminRoute path="/userlist" component={UserListPage}></AdminRoute>
+          <AdminRoute
+            path="/user/:id/edit"
+            component={UserEditPage}
+          ></AdminRoute>
           <Route path="/" component={HomePage} exact></Route>
         </main>
         <footer className="flex center-around">

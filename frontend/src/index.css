@@ -921,3 +921,20 @@ footer {
   width: 4rem;
   cursor: pointer;
 }
+.useredit-container {
+  margin: 0 auto;
+  margin-top: 5rem;
+  height: 550px;
+  width: 450px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+}
+.update-btn {
+  border: none;
+  background-color: #8e2de2;
+  color: white;
+  border-radius: 0.3rem;
+  height: 2rem;
+  width: 7rem;
+  cursor: pointer;
+}
