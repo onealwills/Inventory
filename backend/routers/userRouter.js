@@ -39,6 +39,9 @@ userRouter.post("/signin", async (req, res) => {
 });
 
 userRouter.post("/register", async (req, res) => {
+  console.log("register >>>", req.body.name);
+  console.log("register >>>", req.body.email);
+  console.log("register >>>", req.body.password);
   const user = new User({
     name: req.body.name,
     email: req.body.email,
@@ -111,13 +114,14 @@ userRouter.delete("/:id", isAuth, isAdmin, async (req, res) => {
 });
 
 userRouter.put("/:id", isAuth, isAdmin, async (req, res) => {
+  console.log("update >>>", req.body);
   const user = await User.findById(req.params.id);
   if (user) {
-    user.name = req.user.name || user.name;
-    user.email = req.user.email || user.email;
-    user.isSuperAdmin = req.user.isSuperAdmin || user.isSuperAdmin;
-    user.isAdmin = req.user.isAdmin || user.isAdmin;
-    user.isStockKeeper = req.user.isStockKeeper || user.isStockKeeper;
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isSuperAdmin = Boolean(req.body.isSuperAdmin);
+    user.isAdmin = Boolean(req.body.isAdmin);
+    user.isStockKeeper = Boolean(req.body.isStockKeeper);
 
     const updateUser = await user.save();
     res.send({ message: "user updated", user: updateUser });

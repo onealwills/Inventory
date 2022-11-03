@@ -21,6 +21,7 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
 } from "../constants/userContants";
 
 export const signin = (email, password) => async (dispatch) => {
@@ -157,7 +158,7 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
 };
 
 export const updateUser = (user) => async (dispatch, getState) => {
-  dispatch({ type: USER_UPDATE_REQUEST, payload: user });
+  dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: user });
 
   const {
     userSignin: { userInfo },
@@ -168,7 +169,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     });
-    dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
+    dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
   } catch (error) {
     const message =
       error.response && error.response.data.message
