@@ -94,7 +94,7 @@ export default function UserEditPage(props) {
               <input
                 type="checkbox"
                 id="isSuperAdmin"
-                value={isSuperAdmin}
+                checked={isSuperAdmin}
                 onChange={(e) => setIsSuperAdmin(e.target.value)}
               ></input>
             </div>
@@ -103,7 +103,7 @@ export default function UserEditPage(props) {
               <input
                 type="checkbox"
                 id="isAdmin"
-                value={isAdmin}
+                checked={isAdmin}
                 onChange={(e) => setIsAdmin(e.target.value)}
               ></input>
             </div>
@@ -112,7 +112,7 @@ export default function UserEditPage(props) {
               <input
                 type="checkbox"
                 id="isStockKeeper"
-                value={isStockKeeper}
+                checked={isStockKeeper}
                 onChange={(e) => setIsStockKeeper(e.target.value)}
               ></input>
             </div>

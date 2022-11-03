@@ -39,9 +39,6 @@ userRouter.post("/signin", async (req, res) => {
 });
 
 userRouter.post("/register", async (req, res) => {
-  console.log("register >>>", req.body.name);
-  console.log("register >>>", req.body.email);
-  console.log("register >>>", req.body.password);
   const user = new User({
     name: req.body.name,
     email: req.body.email,
@@ -52,9 +49,9 @@ userRouter.post("/register", async (req, res) => {
     _id: createdUser._id,
     name: createdUser.name,
     email: createdUser.email,
-    isSuperAdmin: createdUser.isSuperAdmin,
-    isAdmin: createdUser.isAdmin,
-    isStockKeeper: createdUser.isStockKeeper,
+    isSuperAdmin: user.isSuperAdmin,
+    isAdmin: user.isAdmin,
+    isStockKeeper: user.isStockKeeper,
     token: generateToken(createdUser),
   });
 });
