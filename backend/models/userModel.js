@@ -8,6 +8,10 @@ const userSchema = new mongoose.Schema(
     isSuperAdmin: { type: Boolean, default: false, required: true },
     isAdmin: { type: Boolean, default: false, required: true },
     isStockKeeper: { type: Boolean, default: false, required: true },
+    stockKeeper: {
+      name: String,
+      warehouse: String,
+    },
   },
   { timestamps: true }
 );

@@ -19,6 +19,7 @@ orderRouter.post("/", isAuth, async (req, res) => {
     res.status(400).send({ message: "cart empty" });
   } else {
     const order = new Order({
+      stockKeeper: req.body.orderItems[0].stockKeeper,
       orderItems: req.body.orderItems,
       shippingAddress: req.body.shippingAddress,
       paymentMethod: req.body.paymentMethod,
@@ -65,7 +66,12 @@ orderRouter.post("/:id/pay", async (req, res) => {
 });
 
 orderRouter.get("/", isAuth, isAdmin, async (req, res) => {
-  const orders = await Order.find({}).populate("user", "name");
+  const stockKeeper = req.query.stockKeeper || "";
+  const stockKeeperFilter = stockKeeper ? { stockKeeper } : {};
+  const orders = await Order.find({ ...stockKeeperFilter }).populate(
+    "user",
+    "name"
+  );
   res.send(orders);
 });
 

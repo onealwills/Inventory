@@ -9,6 +9,7 @@ import {
 } from "../constants/productConstants";
 
 export default function ProductListPage(props) {
+  const stockKeeperMode = props.match.path.indexOf("/stockKeeper") >= 0;
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
@@ -28,6 +29,9 @@ export default function ProductListPage(props) {
     error: errorDelete,
   } = productDelete;
 
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,8 +42,18 @@ export default function ProductListPage(props) {
     if (successDelete) {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
-    dispatch(listProducts());
-  }, [dispatch, createdProduct, props.history, successCreate, successDelete]);
+    dispatch(
+      listProducts({ stockKeeper: stockKeeperMode ? userInfo._id : "" })
+    );
+  }, [
+    dispatch,
+    createdProduct,
+    props.history,
+    successCreate,
+    successDelete,
+    stockKeeperMode,
+    userInfo._id,
+  ]);
 
   const deleteHandler = (product) => {
     // to delete

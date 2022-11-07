@@ -10,10 +10,13 @@ export default function ProfilePage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [stockKeeperName, setStockKeeperName] = useState("");
+  const [stockKeeperWarehouse, setStockKeeperWarehouse] = useState("");
 
   const userSignin = useSelector((state) => state.userSignin);
   console.log("usersignin for proffile page >>>", userSignin);
   const { userInfo } = userSignin;
+  console.log("userinfo for profile>>>", userInfo);
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
@@ -34,6 +37,10 @@ export default function ProfilePage() {
     } else {
       setName(user.name);
       setEmail(user.email);
+      if (user.stockKeeper) {
+        setStockKeeperName(user.stockKeeper.name);
+        setStockKeeperWarehouse(user.stockKeeper.warehouse);
+      }
     }
   }, [dispatch, userInfo._id, user]);
 
@@ -42,7 +49,16 @@ export default function ProfilePage() {
     if (password !== confirmPassword) {
       alert("your shitty passwords do not match");
     } else {
-      dispatch(updateUserProfile({ userId: user._id, name, email, password }));
+      dispatch(
+        updateUserProfile({
+          userId: user._id,
+          name,
+          email,
+          password,
+          stockKeeperName,
+          stockKeeperWarehouse,
+        })
+      );
     }
   };
 
@@ -117,6 +133,33 @@ export default function ProfilePage() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 ></input>
               </div>
+              {user.isStockKeeper && (
+                <>
+                  <h2>Stock Keeper</h2>
+                  <div className="row">
+                    <label htmlFor="stockKeeper name">Stock Keeper Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      placeholder="stock keeper name"
+                      value={stockKeeperName}
+                      onChange={(e) => setStockKeeperName(e.target.value)}
+                    ></input>
+                  </div>
+                  <div className="row">
+                    <label htmlFor="stockKeeper warehouse">
+                      Stock Keeper WareHouse Address
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      placeholder="stock keeper name"
+                      value={stockKeeperWarehouse}
+                      onChange={(e) => setStockKeeperWarehouse(e.target.value)}
+                    ></input>
+                  </div>
+                </>
+              )}
               <div className="row">
                 <label />
                 <button type="submit" className="update-btn">

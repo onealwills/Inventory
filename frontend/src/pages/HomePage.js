@@ -12,7 +12,7 @@ export default function HomePage() {
   // console.log("productlist >>>", productList);
 
   useEffect(() => {
-    dispatch(listProducts());
+    dispatch(listProducts({}));
   }, [dispatch]);
   return (
     <div className="table-container">

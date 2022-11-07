@@ -71,6 +71,11 @@ userRouter.put("/profile", isAuth, async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    if (user.isStockKeeper) {
+      user.stockKeeper.name = req.body.stockKeeperName || user.stockKeeper.name;
+      user.stockKeeper.warehouse =
+        req.body.stockKeeperWarehouse || user.stockKeeper.warehouse;
+    }
     if (req.body.password) {
       user.password = bcrypt.hashSync(req.body.password, 8);
     }
@@ -79,9 +84,9 @@ userRouter.put("/profile", isAuth, async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
-      isSuperAdmin: updatedUser.isSuperAdmin,
-      isAdmin: updatedUser.isAdmin,
-      isStockKeeper: updatedUser.isStockKeeper,
+      isSuperAdmin: user.isSuperAdmin,
+      isAdmin: user.isAdmin,
+      isStockKeeper: user.isStockKeeper,
       token: generateToken(updatedUser),
     });
   }
@@ -119,7 +124,6 @@ userRouter.put("/:id", isAuth, isAdmin, async (req, res) => {
     user.isSuperAdmin = Boolean(req.body.isSuperAdmin);
     user.isAdmin = Boolean(req.body.isAdmin);
     user.isStockKeeper = Boolean(req.body.isStockKeeper);
-
     const updateUser = await user.save();
     res.send({ message: "user updated", user: updateUser });
   } else {

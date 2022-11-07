@@ -11,7 +11,9 @@ import {
 const productRouter = express.Router();
 
 productRouter.get("/", async (req, res) => {
-  const products = await Product.find({});
+  const stockKeeper = req.query.stockKeeper;
+  const stockKeeperFilter = stockKeeper ? { stockKeeper } : {};
+  const products = await Product.find({ ...stockKeeperFilter });
   res.send(products);
 });
 
@@ -45,7 +47,7 @@ productRouter.post("/", isAuth, isStockKeeperOrAdmin, async (req, res) => {
   res.status(201).send({ message: "product created", product: createdProduct });
 });
 
-productRouter.put("/:id", isAuth, async (req, res) => {
+productRouter.put("/:id", isAuth, isStockKeeperOrAdmin, async (req, res) => {
   const productId = req.params.id;
   const product = await Product.findById(productId);
   if (product) {

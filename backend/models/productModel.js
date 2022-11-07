@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema(
     year: { type: String, required: true },
     stockQty: { type: Number, required: true },
     price: { type: Number, required: true },
-    stockkeeper: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
+    stockKeeper: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
   },
   { timestamps: true }
 );

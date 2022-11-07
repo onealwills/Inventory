@@ -61,3 +61,16 @@ export const isStockKeeperOrAdmin = (req, res, next) => {
     res.status(401).send({ message: "Invalid Admin/Stock Keeper Token" });
   }
 };
+
+export const isSuperAdmin = (req, res, next) => {
+  if (
+    req.user &&
+    req.user.isAdmin &&
+    req.user.isStockKeeper &&
+    req.user.isSuperAdmin
+  ) {
+    next();
+  } else {
+    res.status(401).send({ message: "invalid SuperAdmin token" });
+  }
+};

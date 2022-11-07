@@ -21,6 +21,7 @@ import ProductEditPage from "./pages/ProductEditPage";
 import OrderListPage from "./pages/OrderListPage";
 import UserListPage from "./pages/UserListPage";
 import UserEditPage from "./pages/UserEditPage";
+import StockkeeperRoute from "./components/StockkeeperRoute";
 
 function App() {
   const categories = [
@@ -94,6 +95,21 @@ function App() {
             ) : (
               <Link to="/signin">Sign In</Link>
             )}
+            {userInfo && userInfo.isStockKeeper && (
+              <div className="dropdown">
+                <Link to="#admin">
+                  stockKeeper <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/productlist/stockKeeper">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist/stockKeeper">Orders</Link>
+                  </li>
+                </ul>
+              </div>
+            )}
             {userInfo && userInfo.isAdmin && (
               <div className="dropdown">
                 <Link to="#admin">
@@ -158,13 +174,26 @@ function App() {
           <AdminRoute
             path="/productlist"
             component={ProductListPage}
+            exact
           ></AdminRoute>
-          <AdminRoute path="/orderlist" component={OrderListPage}></AdminRoute>
+          <AdminRoute
+            path="/orderlist"
+            component={OrderListPage}
+            exact
+          ></AdminRoute>
           <AdminRoute path="/userlist" component={UserListPage}></AdminRoute>
           <AdminRoute
             path="/user/:id/edit"
             component={UserEditPage}
           ></AdminRoute>
+          <StockkeeperRoute
+            path="/productlist/stockKeeper"
+            component={ProductListPage}
+          ></StockkeeperRoute>
+          <StockkeeperRoute
+            path="/orderlist/stockKeeper"
+            component={OrderListPage}
+          ></StockkeeperRoute>
           <Route path="/" component={HomePage} exact></Route>
         </main>
         <footer className="flex center-around">
