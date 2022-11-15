@@ -11,9 +11,13 @@ import {
 const productRouter = express.Router();
 
 productRouter.get("/", async (req, res) => {
-  const stockKeeper = req.query.stockKeeper;
+  const stockKeeper = req.query.stockKeeper || "";
+  console.log("stockkeeper>>>", stockKeeper);
   const stockKeeperFilter = stockKeeper ? { stockKeeper } : {};
-  const products = await Product.find({ ...stockKeeperFilter });
+  const products = await Product.find({ ...stockKeeperFilter }).populate(
+    "stockKeeper",
+    "stockKeeper.name  stockKeeper.warehouse"
+  );
   res.send(products);
 });
 
@@ -24,7 +28,10 @@ productRouter.get("/seed", async (req, res) => {
 });
 
 productRouter.get("/:id", async (req, res) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id).populate(
+    "stockKeeper",
+    "stockKeeper.name stockKeeper.warehouse"
+  );
   if (product) {
     res.send(product);
   } else {
@@ -34,6 +41,7 @@ productRouter.get("/:id", async (req, res) => {
 
 productRouter.post("/", isAuth, isStockKeeperOrAdmin, async (req, res) => {
   const product = new Product({
+    stockkeeper: req.user._id,
     image: "/images/2009 Honda CRV drier.jpg",
     type: "Ac/drier",
     make: "Honda",
@@ -41,7 +49,6 @@ productRouter.post("/", isAuth, isStockKeeperOrAdmin, async (req, res) => {
     year: "2009",
     stockQty: 0,
     price: 0,
-    stockkeeper: req.user._id,
   });
   const createdProduct = await product.save();
   res.status(201).send({ message: "product created", product: createdProduct });

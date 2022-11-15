@@ -140,19 +140,19 @@ export default function ProfilePage() {
                     <label htmlFor="stockKeeper name">Stock Keeper Name</label>
                     <input
                       type="text"
-                      id="name"
+                      id="stockKeeper-name"
                       placeholder="stock keeper name"
                       value={stockKeeperName}
                       onChange={(e) => setStockKeeperName(e.target.value)}
                     ></input>
                   </div>
                   <div className="row">
-                    <label htmlFor="stockKeeper warehouse">
+                    <label htmlFor="stockKeeperwarehouse">
                       Stock Keeper WareHouse Address
                     </label>
                     <input
                       type="text"
-                      id="name"
+                      id="stockKeeper-warehouse"
                       placeholder="stock keeper name"
                       value={stockKeeperWarehouse}
                       onChange={(e) => setStockKeeperWarehouse(e.target.value)}

@@ -21,6 +21,7 @@ import ProductEditPage from "./pages/ProductEditPage";
 import OrderListPage from "./pages/OrderListPage";
 import UserListPage from "./pages/UserListPage";
 import UserEditPage from "./pages/UserEditPage";
+import StockKeeperPage from "./pages/StockKeeperPage";
 import StockkeeperRoute from "./components/StockkeeperRoute";
 
 function App() {
@@ -131,7 +132,7 @@ function App() {
                 </ul>
               </div>
             )}
-            {userInfo && userInfo.isStockKeeper && (
+            {/* {userInfo && userInfo.isStockKeeper && (
               <div className="dropdown">
                 <Link to="#">Stock Keeper</Link>
                 <ul className="dropdown-content">
@@ -148,7 +149,7 @@ function App() {
                   </li>
                 </ul>
               </div>
-            )}
+            )} */}
 
             {/* <i className="fa fa-caret-down"></i> */}
           </div>
@@ -156,6 +157,7 @@ function App() {
         <SideNav categories={categories} />
 
         <main>
+          <Route path="/stockKeeper/:id" component={StockKeeperPage}></Route>
           <Route path="/cart/:id?" component={CartPage}></Route>
           <Route path="/product/:id" component={ProductPage} exact></Route>
           <Route
