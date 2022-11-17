@@ -12,7 +12,7 @@ const productRouter = express.Router();
 
 productRouter.get("/", async (req, res) => {
   const stockKeeper = req.query.stockKeeper || "";
-  console.log("stockkeeper>>>", stockKeeper);
+  // console.log("stockkeeper>>>", stockKeeper);
   const stockKeeperFilter = stockKeeper ? { stockKeeper } : {};
   const products = await Product.find({ ...stockKeeperFilter }).populate(
     "stockKeeper",

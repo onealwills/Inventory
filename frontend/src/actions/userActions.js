@@ -21,6 +21,9 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_SUCCESS,
+  USER_TOPSTOCKKEEPERS_LIST_REQUEST,
+  USER_TOPSTOCKKEEPERS_LIST_SUCCESS,
+  USER_TOPSTOCKKEEPERS_LIST_FAIL,
 } from "../constants/userContants";
 
 export const signin = (email, password) => async (dispatch) => {
@@ -175,5 +178,20 @@ export const updateUser = (user) => async (dispatch, getState) => {
         ? error.response.data.message
         : error.message;
     dispatch({ type: USER_UPDATE_FAIL, error: message });
+  }
+};
+
+export const listTopStockKeeper = () => async (dispatch) => {
+  dispatch({ type: USER_TOPSTOCKKEEPERS_LIST_REQUEST });
+  try {
+    const { data } = await Axios.get("/api/users/top-stockKeeper");
+    dispatch({ type: USER_TOPSTOCKKEEPERS_LIST_SUCCESS, payload: data });
+    console.log("list top stock keeper>>>", data);
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: USER_TOPSTOCKKEEPERS_LIST_FAIL, error: message });
   }
 };

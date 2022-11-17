@@ -11,6 +11,8 @@ const userSchema = new mongoose.Schema(
     stockKeeper: {
       name: String,
       warehouse: String,
+      rating: { type: Number, default: 0, required: true },
+      numReviews: { type: Number, default: 0, required: true },
     },
   },
   { timestamps: true }

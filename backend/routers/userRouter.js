@@ -11,6 +11,13 @@ import {
 
 const userRouter = express.Router();
 
+userRouter.get("/top-stockKeeper", async (req, res) => {
+  const topStockKeeper = await User.find({ isStockKeeper: true })
+    .sort({ "stockKeeper.rating": -1 })
+    .limit(3);
+  res.send(topStockKeeper);
+});
+
 userRouter.get("/seed", async (req, res) => {
   await User.deleteMany({});
   const createdUser = await User.insertMany(data.users);
@@ -130,4 +137,5 @@ userRouter.put("/:id", isAuth, isAdmin, async (req, res) => {
     res.status(404).send({ message: "user not found" });
   }
 });
+
 export default userRouter;
