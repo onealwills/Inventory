@@ -12,7 +12,7 @@ const productRouter = express.Router();
 
 productRouter.get("/", async (req, res) => {
   const stockKeeper = req.query.stockKeeper || "";
-  // console.log("stockkeeper>>>", stockKeeper);
+  console.log("stockkeeper>>>", stockKeeper);
   const stockKeeperFilter = stockKeeper ? { stockKeeper } : {};
   const products = await Product.find({ ...stockKeeperFilter }).populate(
     "stockKeeper",
@@ -40,8 +40,10 @@ productRouter.get("/:id", async (req, res) => {
 });
 
 productRouter.post("/", isAuth, isStockKeeperOrAdmin, async (req, res) => {
+  console.log("req stock keeper user>>>", req.user._id);
+  console.log("req stock keeper user>>>", req.user.name);
   const product = new Product({
-    stockkeeper: req.user._id,
+    stockKeeper: req.user._id,
     image: "/images/2009 Honda CRV drier.jpg",
     type: "Ac/drier",
     make: "Honda",

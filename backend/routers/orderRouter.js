@@ -9,6 +9,16 @@ import {
 
 const orderRouter = express.Router();
 
+orderRouter.get("/", isAuth, isAdmin, async (req, res) => {
+  const stockKeeper = req.query.stockKeeper || "";
+  const stockKeeperFilter = stockKeeper ? { stockKeeper } : {};
+  const orders = await Order.find({ ...stockKeeperFilter }).populate(
+    "user",
+    "name"
+  );
+  res.send(orders);
+});
+
 orderRouter.get("/mine", isAuth, async (req, res) => {
   const orders = await Order.find({ user: req.user._id });
   res.send(orders);
@@ -63,16 +73,6 @@ orderRouter.post("/:id/pay", async (req, res) => {
   } else {
     res.status(404).send({ message: "Order not found" });
   }
-});
-
-orderRouter.get("/", isAuth, isAdmin, async (req, res) => {
-  const stockKeeper = req.query.stockKeeper || "";
-  const stockKeeperFilter = stockKeeper ? { stockKeeper } : {};
-  const orders = await Order.find({ ...stockKeeperFilter }).populate(
-    "user",
-    "name"
-  );
-  res.send(orders);
 });
 
 orderRouter.delete("/:id", isAuth, isAdmin, async (req, res) => {

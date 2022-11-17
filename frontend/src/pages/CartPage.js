@@ -12,7 +12,7 @@ export default function CartPage(props) {
 
   const cart = useSelector((state) => state.cart);
   console.log("cart >>>", cart);
-  const { cartItems } = cart;
+  const { cartItems, error } = cart;
   // const moment = cartItems === 0;
   // console.log("moment >>>", moment);
 
@@ -38,6 +38,7 @@ export default function CartPage(props) {
       <h3 className="cart-header">WareHouse Cart</h3>
       <div className="cartpage">
         <div className="cartproduct-container">
+          {error && <MessageBox type="danger">{error}</MessageBox>}
           {cartItems.length === 0 ? (
             <MessageBox>
               Cart is empty.{" "}

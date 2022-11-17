@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
+    stockKeeper: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
     image: { type: String, required: true },
     type: { type: String, required: true },
     make: { type: String, required: true },
@@ -9,7 +10,6 @@ const productSchema = new mongoose.Schema(
     year: { type: String, required: true },
     stockQty: { type: Number, required: true },
     price: { type: Number, required: true },
-    stockKeeper: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
   },
   { timestamps: true }
 );
