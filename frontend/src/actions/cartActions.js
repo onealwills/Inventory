@@ -14,11 +14,11 @@ export const addToCart = (productId, qty) => async (dispatch, getState) => {
   } = getState();
   if (
     cartItems.length > 0 &&
-    data.stockKeeper._id !== cartItems[0].stockKeeper.stockKeeper._id
+    data.stockKeeper._id !== cartItems[0].stockKeeper._id
   ) {
     dispatch({
       type: CART_ADD_ITEM_FAIL,
-      payload: `can't add to cart but only from ${cartItems[0].stockKeeper.stockKeeper.name} in this order`,
+      payload: `can only purchase from one stock keeper at a time right now it is ${cartItems[0].stockKeeper.stockKeeper.name} in this order`,
     });
   } else {
     dispatch({
