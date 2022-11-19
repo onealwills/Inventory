@@ -11,13 +11,16 @@ import {
 const productRouter = express.Router();
 
 productRouter.get("/", async (req, res) => {
+  const model = req.query.model || "";
   const stockKeeper = req.query.stockKeeper || "";
   console.log("stockkeeper>>>", stockKeeper);
+  const modelFilter = model ? { model: { $regex: model, $options: "i" } } : {};
   const stockKeeperFilter = stockKeeper ? { stockKeeper } : {};
-  const products = await Product.find({ ...stockKeeperFilter }).populate(
-    "stockKeeper",
-    "stockKeeper.name  stockKeeper.warehouse"
-  );
+
+  const products = await Product.find({
+    ...stockKeeperFilter,
+    ...modelFilter,
+  }).populate("stockKeeper", "stockKeeper.name  stockKeeper.warehouse");
   res.send(products);
 });
 

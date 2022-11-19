@@ -22,7 +22,9 @@ import OrderListPage from "./pages/OrderListPage";
 import UserListPage from "./pages/UserListPage";
 import UserEditPage from "./pages/UserEditPage";
 import StockKeeperPage from "./pages/StockKeeperPage";
+import SearchPage from "./pages/SearchPage";
 import StockkeeperRoute from "./components/StockkeeperRoute";
+import SearchBox from "./components/SearchBox";
 
 function App() {
   const categories = [
@@ -55,16 +57,11 @@ function App() {
             </Link>
           </div>
           <div className="form-div">
-            <form autocomplete="on">
-              <input
-                className="nav-search"
-                type="text"
-                placeholder="search for product..."
-              />
-              <button className="search-btn" type="submit">
-                <i className="fa fa-search"></i>
-              </button>
-            </form>
+            <Route
+              render={({ history }) => (
+                <SearchBox history={history}></SearchBox>
+              )}
+            ></Route>
           </div>
           <div className="user">
             <Link to="/Cart">
@@ -172,6 +169,7 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderPage}></Route>
           <Route path="/order/:id" component={OrderPage}></Route>
           <Route path="/orderhistory" component={OrderHistoryPage}></Route>
+          <Route path="/search/model/:model?" component={SearchPage}></Route>
           <PrivateRoute path="/profile" component={ProfilePage}></PrivateRoute>
           <AdminRoute
             path="/productlist"
