@@ -12,16 +12,46 @@ const productRouter = express.Router();
 
 productRouter.get("/", async (req, res) => {
   const model = req.query.model || "";
+  const type = req.query.type || "";
   const stockKeeper = req.query.stockKeeper || "";
-  console.log("stockkeeper>>>", stockKeeper);
+  const order = req.query.order || "";
+  const min =
+    req.query.min && Number(req.query.min) !== 0 ? Number(req.query.min) : 0;
+  const max =
+    req.query.max && Number(req.query.max) !== 0 ? Number(req.query.max) : 0;
+  const rating =
+    req.query.rating && Number(req.query.rating) !== 0
+      ? Number(req.query.rating)
+      : 0;
   const modelFilter = model ? { model: { $regex: model, $options: "i" } } : {};
   const stockKeeperFilter = stockKeeper ? { stockKeeper } : {};
+  const typeFilter = type ? { type } : {};
+  const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
+  const ratingFilter = rating ? { rating: { $gte: rating } } : {};
+  const sortOrder =
+    order === "lowest"
+      ? { price: 1 }
+      : order === "highest"
+      ? { price: -1 }
+      : order === "toprated"
+      ? { rating: -1 }
+      : { _id: -1 };
 
   const products = await Product.find({
     ...stockKeeperFilter,
     ...modelFilter,
-  }).populate("stockKeeper", "stockKeeper.name  stockKeeper.warehouse");
+    ...typeFilter,
+    ...priceFilter,
+    ...ratingFilter,
+  })
+    .populate("stockKeeper", "stockKeeper.name  stockKeeper.warehouse")
+    .sort(sortOrder);
   res.send(products);
+});
+
+productRouter.get("/type", async (req, res) => {
+  const types = await Product.find().distinct("type");
+  res.send(types);
 });
 
 productRouter.get("/seed", async (req, res) => {

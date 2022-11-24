@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Link, Route } from "react-router-dom";
-import SideNav from "./components/SideNav";
 import CartPage from "./pages/CartPage";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
@@ -25,25 +24,39 @@ import StockKeeperPage from "./pages/StockKeeperPage";
 import SearchPage from "./pages/SearchPage";
 import StockkeeperRoute from "./components/StockkeeperRoute";
 import SearchBox from "./components/SearchBox";
+import { listProductTypes } from "./actions/productActions";
+import LoadingBox from "./components/LoadingBox";
+import MessageBox from "./components/MessageBox";
 
 function App() {
-  const categories = [
-    { _id: "1", type: "condenser" },
-    { _id: "2", type: "Evaporator" },
-    { _id: "3", type: "compressor" },
-    { _id: "4", type: "Expansion valve" },
-    { _id: "5", type: "Cabin filter" },
-    { _id: "6", type: "A/c Drier" },
-    { _id: "7", type: "Cabin filter" },
-  ];
+  // const categories = [
+  //   { _id: "1", type: "condenser" },
+  //   { _id: "2", type: "Evaporator" },
+  //   { _id: "3", type: "compressor" },
+  //   { _id: "4", type: "Expansion valve" },
+  //   { _id: "5", type: "Cabin filter" },
+  //   { _id: "6", type: "A/c Drier" },
+  //   { _id: "7", type: "Cabin filter" },
+  // ];
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
+  const productTypeList = useSelector((state) => state.productTypeList);
+  const { loading: loadingTypes, error: errorTypes, types } = productTypeList;
+  console.log("product types >>>", productTypeList);
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(listProductTypes());
+  }, [dispatch]);
+
   const signoutHandler = () => {
     dispatch(signout());
   };
@@ -52,6 +65,13 @@ function App() {
       <div className="grid-container">
         <nav className="flex center-around">
           <div>
+            <button
+              type="button"
+              className="open-sidebar"
+              onClick={() => setSidebarIsOpen(true)}
+            >
+              <i className="fa fa-bars"></i>
+            </button>
             <Link className="brand" to="/">
               WareHouse
             </Link>
@@ -151,7 +171,39 @@ function App() {
             {/* <i className="fa fa-caret-down"></i> */}
           </div>
         </nav>
-        <SideNav categories={categories} />
+        <aside className={sidebarIsOpen ? "open" : ""}>
+          <ul className="sidenav">
+            <div className="list">
+              <strong className="type">Types</strong>
+              <button
+                className="close-sidebar"
+                onClick={() => setSidebarIsOpen(false)}
+                type="button"
+              >
+                <i className="fa fa-close"></i>
+              </button>
+
+              {loadingTypes ? (
+                <LoadingBox></LoadingBox>
+              ) : errorTypes ? (
+                <MessageBox type="danger">{errorTypes}</MessageBox>
+              ) : (
+                types.map((t) => (
+                  <>
+                    <li key={t}>
+                      <Link
+                        to={`/search/type/${t}`}
+                        onClick={() => setSidebarIsOpen(false)}
+                      >
+                        {t}
+                      </Link>
+                    </li>
+                  </>
+                ))
+              )}
+            </div>
+          </ul>
+        </aside>
 
         <main>
           <Route path="/stockKeeper/:id" component={StockKeeperPage}></Route>
@@ -169,7 +221,22 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderPage}></Route>
           <Route path="/order/:id" component={OrderPage}></Route>
           <Route path="/orderhistory" component={OrderHistoryPage}></Route>
-          <Route path="/search/model/:model?" component={SearchPage}></Route>
+          <Route
+            path="/search/model/:model?"
+            component={SearchPage}
+            exact
+          ></Route>
+          <Route path="/search/type/:type" component={SearchPage} exact></Route>
+          <Route
+            path="/search/type/:type/model/:model"
+            component={SearchPage}
+            exact
+          ></Route>
+          <Route
+            path="/search/type/:type/model/:model/min/:min/max/:max/rating/:rating/order/:order"
+            component={SearchPage}
+            exact
+          ></Route>
           <PrivateRoute path="/profile" component={ProfilePage}></PrivateRoute>
           <AdminRoute
             path="/productlist"
