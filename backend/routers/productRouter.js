@@ -56,8 +56,19 @@ productRouter.get("/type", async (req, res) => {
 
 productRouter.get("/seed", async (req, res) => {
   // await Product.removeMany();
-  const createdProduct = await Product.insertMany(data.products);
-  res.send({ createdProduct });
+  const stockKeeper = await User.findOne({ isStockKeeper: true });
+  if (stockKeeper) {
+    const products = data.products.map((product) => ({
+      ...product,
+      stockKeeper: stockKeeper._id,
+    }));
+    const createdProducts = await Product.insertMany(products);
+    res.send({ createdProducts });
+  } else {
+    res
+      .status(500)
+      .send({ message: "No stock Keeper found. first run /api/users/seed" });
+  }
 });
 
 productRouter.get("/:id", async (req, res) => {

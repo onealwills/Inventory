@@ -27,6 +27,8 @@ import SearchBox from "./components/SearchBox";
 import { listProductTypes } from "./actions/productActions";
 import LoadingBox from "./components/LoadingBox";
 import MessageBox from "./components/MessageBox";
+import MapPage from "./pages/MapPage";
+import DashBoardPage from "./pages/DashBoardPage";
 
 function App() {
   // const categories = [
@@ -238,6 +240,7 @@ function App() {
             exact
           ></Route>
           <PrivateRoute path="/profile" component={ProfilePage}></PrivateRoute>
+          <PrivateRoute path="/map" component={MapPage}></PrivateRoute>
           <AdminRoute
             path="/productlist"
             component={ProductListPage}
@@ -253,6 +256,7 @@ function App() {
             path="/user/:id/edit"
             component={UserEditPage}
           ></AdminRoute>
+          <AdminRoute path="/dashboard" component={DashBoardPage}></AdminRoute>
           <StockkeeperRoute
             path="/productlist/stockKeeper"
             component={ProductListPage}

@@ -125,7 +125,7 @@ export default function OrderPage(props) {
               Delivered at {order.deliveredAt}
             </MessageBox>
           ) : (
-            <MessageBox variant="danger">Not Delivered</MessageBox>
+            <MessageBox type="danger">Not Delivered</MessageBox>
           )}
         </div>
         <div>

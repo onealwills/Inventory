@@ -11,6 +11,11 @@ export default function ShippingAddressPage(props) {
   const { shippingAddress } = cart;
   console.log("shipping address>>>", shippingAddress);
 
+  const [lat, setLat] = useState(shippingAddress ? shippingAddress.lat : "");
+  const [lng, setLng] = useState(shippingAddress ? shippingAddress.lng : "");
+  const userAddressMap = useSelector((state) => state.userAddressMap);
+  const { address: addressMap } = userAddressMap;
+
   if (!userInfo) {
     props.history.push("/signin");
   }
@@ -31,9 +36,46 @@ export default function ShippingAddressPage(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    dispatch(saveShippingAddress({ name, address, city, country, postalCode }));
-    props.history.push("/payment");
+    const newLat = addressMap ? addressMap.lat : lat;
+    const newLng = addressMap ? addressMap.lng : lng;
+    if (addressMap) {
+      setLat(addressMap.lat);
+      setLng(addressMap.lng);
+    }
+    let moveOn = true;
+    if (!newLat || !newLng) {
+      moveOn = window.confirm(
+        "You did not set your location on map. Continue?"
+      );
+    }
+    if (moveOn) {
+      dispatch(
+        saveShippingAddress({
+          name,
+          address,
+          city,
+          country,
+          postalCode,
+          lat: newLat,
+          lng: newLng,
+        })
+      );
+      props.history.push("/payment");
+    }
+  };
+  const chooseOnMap = () => {
+    dispatch(
+      saveShippingAddress({
+        name,
+        address,
+        city,
+        country,
+        postalCode,
+        lat,
+        lng,
+      })
+    );
+    props.history.push("/map");
   };
 
   return (
@@ -95,6 +137,12 @@ export default function ShippingAddressPage(props) {
             value={country}
             onChange={(e) => setCountry(e.target.value)}
           ></input>
+        </div>
+        <div>
+          <label htmlFor="chooseOnMap">Location</label>
+          <button type="button" onClick={chooseOnMap}>
+            Choose On Map
+          </button>
         </div>
         <div>
           <label />

@@ -9,6 +9,12 @@ const data = {
       isSuperAdmin: true,
       isAdmin: true,
       isStockKeeper: true,
+      stockKeeper: {
+        name: "Oneal",
+        warehouse: "4 graceland avenue",
+        rating: 4.7,
+        numReviews: 100,
+      },
     },
     {
       name: "John",
@@ -17,6 +23,12 @@ const data = {
       isSuperAdmin: false,
       isAdmin: true,
       isStockKeeper: true,
+      stockKeeper: {
+        name: "john",
+        warehouse: "4 graceland avenue",
+        rating: 4.5,
+        numReviews: 120,
+      },
     },
     {
       name: "Bills",
@@ -25,6 +37,12 @@ const data = {
       isSuperAdmin: false,
       isAdmin: false,
       isStockKeeper: true,
+      stockKeeper: {
+        name: "Bills",
+        warehouse: "6 graceland avenue",
+        rating: 4.8,
+        numReviews: 90,
+      },
     },
     {
       name: "maroon",

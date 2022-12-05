@@ -20,6 +20,8 @@ export default function ProfilePage() {
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
+  console.log("user details >>>", userDetails);
+
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const {
     success: successUpdate,
