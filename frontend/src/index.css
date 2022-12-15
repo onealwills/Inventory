@@ -811,8 +811,10 @@ footer {
   border-bottom-right-radius: 0.5rem;
 }
 .dropdown-content a {
-  margin-top: 1.5rem;
   color: white;
+}
+.dropdown-content li {
+  margin-top: 1rem;
 }
 .dropdown:hover .dropdown-content {
   display: block;
