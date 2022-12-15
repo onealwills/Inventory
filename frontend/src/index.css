@@ -1180,3 +1180,9 @@ button.close-sidebar {
   border-radius: 0 1rem 1rem 0;
   border-left: 0;
 }
+.searchpage {
+  display: flex;
+}
+.margin-t {
+  margin-top: 4rem;
+}
