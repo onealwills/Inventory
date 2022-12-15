@@ -31,16 +31,6 @@ import MapPage from "./pages/MapPage";
 import DashBoardPage from "./pages/DashBoardPage";
 
 function App() {
-  // const categories = [
-  //   { _id: "1", type: "condenser" },
-  //   { _id: "2", type: "Evaporator" },
-  //   { _id: "3", type: "compressor" },
-  //   { _id: "4", type: "Expansion valve" },
-  //   { _id: "5", type: "Cabin filter" },
-  //   { _id: "6", type: "A/c Drier" },
-  //   { _id: "7", type: "Cabin filter" },
-  // ];
-
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
@@ -86,12 +76,14 @@ function App() {
             ></Route>
           </div>
           <div className="user">
-            <Link to="/Cart">
-              Cart
-              {cartItems.length > 0 && (
-                <span className="cart-badge">{cartItems.length}</span>
-              )}
-            </Link>
+            <div className="cart">
+              <Link to="/Cart">
+                Cart
+                {cartItems.length > 0 && (
+                  <span className="cart-badge">{cartItems.length}</span>
+                )}
+              </Link>
+            </div>
             {userInfo ? (
               <div className="dropdown">
                 <Link to="#">
@@ -175,7 +167,7 @@ function App() {
         </nav>
         <aside className={sidebarIsOpen ? "open" : ""}>
           <ul className="sidenav">
-            <div className="list">
+            <div className="sidenav__header">
               <strong className="type">Types</strong>
               <button
                 className="close-sidebar"
@@ -184,7 +176,8 @@ function App() {
               >
                 <i className="fa fa-close"></i>
               </button>
-
+            </div>
+            <div className="list">
               {loadingTypes ? (
                 <LoadingBox></LoadingBox>
               ) : errorTypes ? (

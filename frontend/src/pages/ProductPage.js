@@ -24,13 +24,14 @@ export default function ProductPage(props) {
     error: errorReviewCreate,
     success: successReviewCreate,
   } = productReviewCreate;
+  console.log("review created store>>>", productReviewCreate);
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
   useEffect(() => {
     if (successReviewCreate) {
-      window.alert("Review Added successfilly");
+      window.alert("Review Added successfully");
       setRating("");
       setComment("");
       dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
@@ -149,71 +150,82 @@ export default function ProductPage(props) {
               </div>
             </div>
           </div>
-          <div>
-            <h2 id="reviews">Reviews</h2>
-            {product.reviews.length === 0 && (
-              <MessageBox>There is no Review</MessageBox>
-            )}
-            <div>
-              {product.reviews.map((review) => {
-                const { _id, name, rating, comment, createdAt } = review;
-                return (
-                  <div key={_id}>
-                    <strong>{name}</strong>
-                    <Rating rating={rating} caption=""></Rating>
-                    <p>{createdAt.substring(0, 10)}</p>
-                    <p>{comment}</p>
-                  </div>
-                );
-              })}
+          <div className="reviews">
+            <div className="reviews__display">
+              <h2>Reviews</h2>
+              {product.reviews.length === 0 && (
+                <MessageBox>There is no Review</MessageBox>
+              )}
+              <div className="reviews__list">
+                {product.reviews.map((review) => {
+                  const { _id, name, rating, comment, createdAt } = review;
+                  console.log("reviews>>>", review);
+                  return (
+                    <div key={_id}>
+                      <strong>{name}</strong>
+                      <Rating rating={rating} caption=""></Rating>
+                      <p>{createdAt.substring(0, 10)}</p>
+                      <p>{comment}</p>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
+            {userInfo ? (
+              <div className="reviews__form">
+                <form className="form" onSubmit={submitHandler}>
+                  <div className="customer-review">
+                    <h2>Write a customer review</h2>
+                  </div>
+                  <div>
+                    <label className="labelrating" htmlFor="rating">
+                      Rating
+                    </label>
+                    <select
+                      id="labelrating"
+                      value={rating}
+                      onChange={(e) => setRating(e.target.value)}
+                    >
+                      <option value="">Select...</option>
+                      <option value="1">1- Poor</option>
+                      <option value="2">2- Fair</option>
+                      <option value="3">3- Good</option>
+                      <option value="4">4- Very good</option>
+                      <option value="5">5- Excelent</option>
+                    </select>
+                  </div>
+                  <div className="comment_container">
+                    <label className="comment" htmlFor="comment">
+                      Comment
+                    </label>
+                    <textarea
+                      id="comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label />
+                    <button className="comment_btn" type="submit">
+                      Submit
+                    </button>
+                  </div>
+                  <div>
+                    {loadingReviewCreate && <LoadingBox></LoadingBox>}
+                    {errorReviewCreate && (
+                      <MessageBox variant="danger">
+                        {errorReviewCreate}
+                      </MessageBox>
+                    )}
+                  </div>
+                </form>
+              </div>
+            ) : (
+              <MessageBox>
+                Please <Link to="/signin">Sign In</Link> to write a review
+              </MessageBox>
+            )}
           </div>
-          {userInfo ? (
-            <form className="form" onSubmit={submitHandler}>
-              <div>
-                <h2>Write a customer review</h2>
-              </div>
-              <div>
-                <label htmlFor="rating">Rating</label>
-                <select
-                  id="rating"
-                  value={rating}
-                  onChange={(e) => setRating(e.target.value)}
-                >
-                  <option value="">Select...</option>
-                  <option value="1">1- Poor</option>
-                  <option value="2">2- Fair</option>
-                  <option value="3">3- Good</option>
-                  <option value="4">4- Very good</option>
-                  <option value="5">5- Excelent</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="comment">Comment</label>
-                <textarea
-                  id="comment"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                ></textarea>
-              </div>
-              <div>
-                <label />
-                <button className="primary" type="submit">
-                  Submit
-                </button>
-              </div>
-              <div>
-                {loadingReviewCreate && <LoadingBox></LoadingBox>}
-                {errorReviewCreate && (
-                  <MessageBox variant="danger">{errorReviewCreate}</MessageBox>
-                )}
-              </div>
-            </form>
-          ) : (
-            <MessageBox>
-              Please <Link to="/signin">Sign In</Link> to write a review
-            </MessageBox>
-          )}
         </div>
       )}
     </div>

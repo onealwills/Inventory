@@ -1,10 +1,4 @@
 import {
-  PRODUCT_REVIEW_CREATE_FAIL,
-  PRODUCT_REVIEW_CREATE_REQUEST,
-  PRODUCT_REVIEW_CREATE_RESET,
-  PRODUCT_REVIEW_CREATE_SUCCESS,
-} from "../constants/productConstants";
-import {
   USER_ADDRESS_MAP_CONFIRM,
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,
@@ -151,21 +145,6 @@ export const userTopStockKeeperListReducer = (
       return { loading: false, users: action.payload };
     case USER_TOPSTOCKKEEPERS_LIST_FAIL:
       return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
-
-export const productReviewCreateReducer = (state = {}, action) => {
-  switch (action.type) {
-    case PRODUCT_REVIEW_CREATE_REQUEST:
-      return { loading: true };
-    case PRODUCT_REVIEW_CREATE_SUCCESS:
-      return { loading: false, success: true, review: action.payload };
-    case PRODUCT_REVIEW_CREATE_FAIL:
-      return { loading: false, error: action.payload };
-    case PRODUCT_REVIEW_CREATE_RESET:
-      return {};
     default:
       return state;
   }

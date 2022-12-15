@@ -36,7 +36,7 @@ export default function HomePage() {
         ) : errorStockKeeper ? (
           <MessageBox type="danger">{errorStockKeeper}</MessageBox>
         ) : (
-          <>
+          <div className="stockeeper__list">
             {stockKeepers.length === 0 && (
               <MessageBox type="danger">No Stock keeper found</MessageBox>
             )}
@@ -48,7 +48,7 @@ export default function HomePage() {
                 </Link>
               </div>
             ))}
-          </>
+          </div>
         )}
       </div>
       <div className="table-container">

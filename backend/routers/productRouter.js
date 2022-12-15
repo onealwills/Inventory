@@ -132,7 +132,7 @@ productRouter.post("/:id/reviews", isAuth, async (req, res) => {
   const productId = req.params.id;
   const product = await Product.findById(productId);
   if (product) {
-    if (product.review.find((x) => x.name === req.user.name)) {
+    if (product.reviews.find((x) => x.name === req.user.name)) {
       return res.status(404).send({ message: "user already submitted review" });
     }
     const review = {
@@ -144,9 +144,9 @@ productRouter.post("/:id/reviews", isAuth, async (req, res) => {
     product.reviews.push(review);
     product.numReviews = product.reviews.length;
     product.rating =
-      product.reviews.reduce(a, (c) => c.rating + a, 0) /
+      product.reviews.reduce((a, c) => c.rating + a, 0) /
       product.reviews.length;
-    const updatedProduct = await Product.save();
+    const updatedProduct = await product.save();
     res.status(201).send({
       message: "review added successfully",
       review: updatedProduct.reviews[updatedProduct.reviews.length - 1],

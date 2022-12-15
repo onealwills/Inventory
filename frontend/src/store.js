@@ -16,11 +16,11 @@ import {
   productDeleteReducer,
   productDetailsReducer,
   productListReducer,
+  productReviewCreateReducer,
   productTypeListReducer,
   productUpdateReducer,
 } from "./reducers/productReducers";
 import {
-  productReviewCreateReducer,
   userAddressMapReducer,
   userDeleteReducer,
   userDetailsReducer,

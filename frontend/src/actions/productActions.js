@@ -154,13 +154,11 @@ export const createReview =
     } = getState();
 
     try {
-      const { data } = Axios.post(
+      const { data } = await Axios.post(
         `/api/products/${productId}/reviews`,
         review,
         {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
+          headers: { Authorization: `Bearer ${userInfo.token}` },
         }
       );
       dispatch({ type: PRODUCT_REVIEW_CREATE_SUCCESS, payload: data.review });

@@ -139,7 +139,12 @@ export default function ProfilePage() {
                 <>
                   <h2>Stock Keeper</h2>
                   <div className="row">
-                    <label htmlFor="stockKeeper name">Stock Keeper Name</label>
+                    <label
+                      className="stockeepername_label"
+                      htmlFor="stockKeeper name"
+                    >
+                      Stock Keeper Name
+                    </label>
                     <input
                       type="text"
                       id="stockKeeper-name"
@@ -149,7 +154,10 @@ export default function ProfilePage() {
                     ></input>
                   </div>
                   <div className="row">
-                    <label htmlFor="stockKeeperwarehouse">
+                    <label
+                      className="stockeeperwarehouse_label"
+                      htmlFor="stockKeeperwarehouse"
+                    >
                       Stock Keeper WareHouse Address
                     </label>
                     <input
