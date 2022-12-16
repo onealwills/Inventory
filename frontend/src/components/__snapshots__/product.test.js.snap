@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Product/> component snapshot 1`] = `
+<div>
+  <tr>
+    <td>
+      1111111111111111
+    </td>
+    <td>
+      <a
+        href="/product/1111111111111111"
+      >
+        <img
+          src="/images/2009 Honda CRV drier.jpg"
+        />
+      </a>
+    </td>
+    <td>
+      Ac/drier
+    </td>
+    <td>
+      Honda
+    </td>
+    <td>
+      CRV
+    </td>
+    <td>
+      2009
+    </td>
+    <td>
+      50
+    </td>
+    <td>
+      <span>
+        ₦
+      </span>
+      12000
+    </td>
+    <a
+      href="/stockKeeper/2222222222222222"
+    >
+      <td>
+        Block A4, shop 12
+      </td>
+    </a>
+  </tr>
+</div>
+`;

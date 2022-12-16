@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct, listProducts } from "../actions/productActions";
+import {
+  createProduct,
+  deleteProduct,
+  listProducts,
+} from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import {
@@ -58,7 +62,7 @@ export default function ProductListPage(props) {
   const deleteHandler = (product) => {
     // to delete
     if (window.confirm("you want to delete this shit")) {
-      dispatch(productDelete(product._id));
+      dispatch(deleteProduct(product._id));
     }
   };
 

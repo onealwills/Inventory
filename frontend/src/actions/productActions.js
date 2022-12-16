@@ -5,6 +5,7 @@ import {
   PRODUCT_CREATE_SUCCESS,
   PRODUCT_DELETE_FAIL,
   PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
   PRODUCT_DETAIL_FAIL,
   PRODUCT_DETAIL_REQUEST,
   PRODUCT_DETAIL_SUCCESS,
@@ -124,7 +125,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   }
 };
 
-export const productDelete = (productId) => async (dispatch, getState) => {
+export const deleteProduct = (productId) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
   const {
     userSignin: { userInfo },
@@ -135,7 +136,7 @@ export const productDelete = (productId) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     });
-    dispatch({ type: PRODUCT_DETAIL_SUCCESS, payload: data });
+    dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data });
   } catch (error) {
     const message =
       error.response && error.response.data.message
