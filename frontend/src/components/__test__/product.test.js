@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
-import Product from "./Product";
+import { MemoryRouter } from "react-router-dom";
+import Product from "../Product";
 
 const stockKeeper = {
   _id: "2222222222222222",
@@ -20,9 +20,9 @@ const product = {
 
 test("<Product/> component snapshot", () => {
   const component = render(
-    <BrowserRouter>
+    <MemoryRouter>
       <Product key={product._id} product={product} />
-    </BrowserRouter>
+    </MemoryRouter>
   );
   expect(component.container).toMatchSnapshot();
 });

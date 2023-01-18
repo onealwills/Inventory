@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Rating/> component Snapshot 1`] = `
+<div>
+  <div
+    class="rating"
+  >
+    <span>
+      <i
+        class="fa fa-star-o"
+      />
+    </span>
+    <span>
+      <i
+        class="fa fa-star-o"
+      />
+    </span>
+    <span>
+      <i
+        class="fa fa-star-o"
+      />
+    </span>
+    <span>
+      <i
+        class="fa fa-star-o"
+      />
+    </span>
+    <span>
+      <i
+        class="fa fa-star-o"
+      />
+    </span>
+    <span>
+      undefined reviews
+    </span>
+  </div>
+</div>
+`;

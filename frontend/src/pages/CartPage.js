@@ -6,6 +6,7 @@ import MessageBox from "../components/MessageBox";
 
 export default function CartPage(props) {
   const productId = props.match.params.id;
+
   const qty = props.location.search
     ? Number(props.location.search.split("=")[1])
     : 1;
@@ -34,7 +35,7 @@ export default function CartPage(props) {
   };
 
   return (
-    <div className="cartpage-container">
+    <div role="main" className="cartpage-container">
       <h3 className="cart-header">WareHouse Cart</h3>
       <div className="cartpage">
         <div className="cartproduct-container">
@@ -68,6 +69,7 @@ export default function CartPage(props) {
                     </div>
                     <div className="cart-qty">
                       <select
+                        role="none"
                         className="select-qty"
                         value={item.qty}
                         onChange={(e) =>
@@ -86,6 +88,7 @@ export default function CartPage(props) {
                     <div>{item.price}</div>
                     <div>
                       <button
+                        data-testid="delete-btn"
                         className="delete-btn"
                         type="button"
                         onClick={() => removeFromCartHandler(item.product)}

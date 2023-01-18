@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LoadingBox/> snapshot test 1`] = `
+<div>
+  <div
+    class="loading"
+  >
+    <i
+      class="fa fa-spinner fa-spin"
+    />
+    Wait a sec...
+  </div>
+</div>
+`;

@@ -61,7 +61,7 @@ export default function OrderListPage(props) {
                 <th>ACTIONS</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody data-testid="orderlist-body">
               {orders.map((order) => (
                 <tr key={order._id}>
                   <td>{order._id}</td>

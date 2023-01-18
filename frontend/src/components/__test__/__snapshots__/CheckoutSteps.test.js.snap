@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CheckoutSteps/> component snapshot test 1`] = `
+<div>
+  <div
+    class="row checkout-steps"
+  >
+    <div
+      class=""
+    >
+      Signin
+    </div>
+    <div
+      class=""
+    >
+      Shipping
+    </div>
+    <div
+      class=""
+    >
+      Payment
+    </div>
+    <div
+      class=""
+    >
+      PlaceOrder
+    </div>
+  </div>
+</div>
+`;

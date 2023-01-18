@@ -16,7 +16,7 @@ export default function OrderHistoryPage(props) {
   }, [dispatch]);
   return (
     <div className="orderhistory-container">
-      <div className="orderhistory-table">
+      <div data-testid="orders-table" className="orderhistory-table">
         <h1>Order History</h1>
         {loading ? (
           <LoadingBox></LoadingBox>
@@ -48,6 +48,7 @@ export default function OrderHistoryPage(props) {
                   </td>
                   <td>
                     <button
+                      data-testid="details-btn"
                       type="button"
                       className="orderhistory-btn"
                       onClick={() => {

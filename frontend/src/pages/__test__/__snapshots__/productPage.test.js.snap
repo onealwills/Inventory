@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductPage component renders error state correctly 1`] = `ShallowWrapper {}`;
+
+exports[`ProductPage component renders loading state correctly 1`] = `ShallowWrapper {}`;
+
+exports[`ProductPage component renders product data correctly 1`] = `ShallowWrapper {}`;

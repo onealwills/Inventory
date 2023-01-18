@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MessageBox/> component snapshot test 1`] = `
+<div>
+  <div
+    class="alert alert-danger "
+  >
+    yeye dey smell
+  </div>
+</div>
+`;

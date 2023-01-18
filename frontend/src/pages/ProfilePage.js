@@ -87,7 +87,11 @@ export default function ProfilePage() {
             )}
             <div>
               <div className="row">
-                <label htmlFor="name" className="name-label">
+                <label
+                  htmlFor="name"
+                  aria-labelledby="name"
+                  className="name-label"
+                >
                   Name
                 </label>
                 <input
@@ -99,7 +103,11 @@ export default function ProfilePage() {
                 ></input>
               </div>
               <div className="row">
-                <label htmlFor="Email" className="email-label">
+                <label
+                  htmlFor="Email"
+                  aria-labelledby="email"
+                  className="email-label"
+                >
                   Email
                 </label>
                 <input
@@ -111,7 +119,11 @@ export default function ProfilePage() {
                 ></input>
               </div>
               <div className="row">
-                <label htmlFor="password" className="password-label">
+                <label
+                  htmlFor="password"
+                  aria-labelledby="password"
+                  className="password-label"
+                >
                   password
                 </label>
                 <input
@@ -130,7 +142,7 @@ export default function ProfilePage() {
                 </label>
                 <input
                   type="password"
-                  placeholder="shitty password"
+                  placeholder="shitty confirmpassword"
                   id="confirmpassword"
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 ></input>
@@ -142,6 +154,7 @@ export default function ProfilePage() {
                     <label
                       className="stockeepername_label"
                       htmlFor="stockKeeper name"
+                      aria-labelledby="StockKeeper_Name"
                     >
                       Stock Keeper Name
                     </label>
@@ -157,13 +170,14 @@ export default function ProfilePage() {
                     <label
                       className="stockeeperwarehouse_label"
                       htmlFor="stockKeeperwarehouse"
+                      aria-labelledby="stockeeperwarehouse_label"
                     >
                       Stock Keeper WareHouse Address
                     </label>
                     <input
                       type="text"
                       id="stockKeeper-warehouse"
-                      placeholder="stock keeper name"
+                      placeholder="stock keeper warehouse"
                       value={stockKeeperWarehouse}
                       onChange={(e) => setStockKeeperWarehouse(e.target.value)}
                     ></input>
