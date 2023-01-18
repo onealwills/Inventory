@@ -91,13 +91,13 @@ export default function ProductEditPage(props) {
   };
   return (
     <div className="productEdit-container">
-      <form className="form" onSubmit={submitHandler}>
+      <form className="form" data-testid="form" onSubmit={submitHandler}>
         <div>
           <h1>Product Edit {productId}</h1>
         </div>
         {loadingUpdate && <LoadingBox></LoadingBox>}
         {errorUpdate && <MessageBox type="danger">{errorUpdate}</MessageBox>}
-        <div>
+        <div data-testid="error">
           {loading && <LoadingBox></LoadingBox>}
           {error && <MessageBox type="danger">{error}</MessageBox>}
           <>
@@ -120,6 +120,7 @@ export default function ProductEditPage(props) {
               <input
                 id="imageFile"
                 label="choose image ode"
+                data-testid="uploadimage"
                 type="file"
                 onChange={uploadFileHandler}
               ></input>
