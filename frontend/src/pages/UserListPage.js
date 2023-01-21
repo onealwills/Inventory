@@ -58,7 +58,7 @@ export default function UserListPage(props) {
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr key={user._id}>
+              <tr role="row" key={user._id}>
                 <td>{user._id}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>

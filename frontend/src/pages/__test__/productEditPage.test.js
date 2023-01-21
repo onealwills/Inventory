@@ -85,7 +85,7 @@ describe("ProductEditPage", () => {
     const { getByTestId } = render(
       <ProductEditPage match={{ params: { id: "1" } }} />
     );
-    screen.debug();
+    // screen.debug();
     expect(getByTestId("error")).toBeInTheDocument();
   });
   it("should update the product successfully", async () => {
@@ -198,7 +198,7 @@ describe("ProductEditPage", () => {
     const { getByTestId } = render(
       <ProductEditPage match={{ params: { id: "1" } }} />
     );
-    screen.debug();
+    // screen.debug();
 
     await act(async () => {
       fireEvent.change(getByTestId("uploadimage"), {

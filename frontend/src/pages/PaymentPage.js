@@ -27,6 +27,7 @@ export default function PaymentPage(props) {
         <h3>Pay me asshole!</h3>
         <div className="row">
           <input
+            data-testid="flutterwave-radio"
             type="radio"
             id="flutterwave"
             value="flutterwave"
@@ -53,7 +54,11 @@ export default function PaymentPage(props) {
         </div>
         <div>
           <label />
-          <button className="continue-btn" type="submit">
+          <button
+            data-testid="submit-btn"
+            className="continue-btn"
+            type="submit"
+          >
             Continue
           </button>
         </div>

@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserListPage should render the UserListPage component 1`] = `
+<div>
+  <div>
+    <h1>
+      Users List
+    </h1>
+    <div>
+      <thead>
+        <tr>
+          <th>
+            ID
+          </th>
+          <th>
+            NAME
+          </th>
+          <th>
+            EMAIL
+          </th>
+          <th>
+            IS SUPER ADMIN
+          </th>
+          <th>
+            IS ADMIN
+          </th>
+          <th>
+            IS STOCK KEEPER
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          role="row"
+        >
+          <td>
+            123
+          </td>
+          <td>
+            John Doe
+          </td>
+          <td>
+            johndoe@example.com
+          </td>
+          <td>
+            NO
+          </td>
+          <td>
+            YES
+          </td>
+          <td>
+            NO
+          </td>
+          <td>
+            <button
+              class="userlist-btn"
+              type="button"
+            >
+              Edit
+            </button>
+            <button
+              class="userlist-btn"
+              type="button"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </div>
+  </div>
+</div>
+`;

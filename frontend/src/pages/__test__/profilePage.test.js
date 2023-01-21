@@ -41,7 +41,7 @@ describe("Profile Page", () => {
       </Provider>
     );
 
-    screen.debug();
+    // screen.debug();
 
     expect(getByText("User Profile")).toBeInTheDocument();
     expect(getByLabelText(user.name)).toBeInTheDocument();
@@ -75,7 +75,7 @@ describe("Profile Page", () => {
         <ProfilePage match={{ params: { id: "1" } }} />
       </Provider>
     );
-    screen.debug();
+    // screen.debug();
 
     fireEvent.change(getByPlaceholderText("put your f** name"), {
       target: { value: "new name" },

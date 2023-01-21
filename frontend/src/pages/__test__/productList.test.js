@@ -118,5 +118,7 @@ describe("Product List Page", () => {
     expect(dispatch).toHaveBeenNthCalledWith(2, {
       type: "PRODUCT_DELETE_RESET",
     });
+    //  expect(dispatch).toHaveBeenCalledWith(listProducts({ stockKeeper: "1" }));
+    //  expect(dispatch).toHaveBeenCalledWith({ type: PRODUCT_DELETE_RESET });
   });
 });
