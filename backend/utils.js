@@ -50,7 +50,7 @@ export const isStockKeeper = (req, res, next) => {
   if (req.user && req.user.isStockKeeper) {
     next();
   } else {
-    res.status(401).status({ message: "Invalid Stock keeper token" });
+    res.status(401).send({ message: "Invalid Stock keeper token" });
   }
 };
 
