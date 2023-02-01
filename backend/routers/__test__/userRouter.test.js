@@ -9,17 +9,19 @@ import { expect, jest } from "@jest/globals";
 export const api = supertest(app);
 
 // console.log(api);
+let token;
 
 describe("user Route", () => {
   beforeEach(async () => {
     // console.log("Running beforeEach");
     await User.deleteMany({});
   });
-  // afterEach(() => {
-  //   jest.useRealTimers();
-  // });
-  //   afterAll(() => jest.setTimeout(5 * 1000));
-  // afterAll(() => jest.clearAllTimers());
+
+  it("should seed the database with data.users", async () => {
+    const res = await api.get("/api/users/seed");
+    expect(res.status).toEqual(200);
+    expect(res.body.createdUser).toHaveLength(data.users.length);
+  });
 
   it("should return the top 3 stock keepers by rating", async () => {
     const users = [
@@ -61,12 +63,6 @@ describe("user Route", () => {
     expect(res.body[0].stockKeeper.rating).toEqual(5);
     expect(res.body[1].stockKeeper.rating).toEqual(4);
     expect(res.body[2].stockKeeper.rating).toEqual(3);
-  });
-
-  it("should seed the database with data.users", async () => {
-    const res = await api.get("/api/users/seed");
-    expect(res.status).toEqual(200);
-    expect(res.body.createdUser).toHaveLength(data.users.length);
   });
 
   it("should sign in the user with valid credentials", async () => {
@@ -173,5 +169,77 @@ describe("user Route", () => {
     // console.log("res>>>", response);
 
     expect(response.body).toHaveProperty("message", "user not found");
+  });
+});
+
+describe("PUT /profile", () => {
+  let user;
+
+  beforeEach(async () => {
+    user = new User({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password: "password123",
+      isStockKeeper: true,
+      stockKeeper: {
+        name: "John Stock",
+        warehouse: "Warehouse 1",
+      },
+    });
+    await user.save();
+  });
+
+  it("updates user profile", async () => {
+    const response = await api
+      .put("/api/users/profile")
+      .set("Authorization", `Bearer ${generateToken(user)}`)
+      .send({
+        name: "Jane Doe",
+        email: "janedoe@example.com",
+        password: "password456",
+        stockKeeperName: "Jane Stock",
+        stockKeeperWarehouse: "Warehouse 2",
+      });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toMatchObject({
+      _id: expect.any(String),
+      name: "Jane Doe",
+      email: "janedoe@example.com",
+      isStockKeeper: true,
+      token: expect.any(String),
+    });
+
+    const updatedUser = await User.findById(user._id);
+    expect(updatedUser.name).toBe("Jane Doe");
+    expect(updatedUser.email).toBe("janedoe@example.com");
+    expect(updatedUser.stockKeeper.name).toBe("Jane Stock");
+    expect(updatedUser.stockKeeper.warehouse).toBe("Warehouse 2");
+    expect(updatedUser.password).not.toBe("password123");
+  });
+});
+
+describe("first", () => {
+  beforeAll((done) => {
+    const userSign = {
+      email: "SuperAdmin@example.com",
+      password: "1234",
+    };
+    api
+      .post("/api/users/signin")
+      .send(userSign)
+      .end((err, res) => {
+        token = res.body.token;
+        done();
+      });
+  });
+
+  it("returns 401 if not authenticated", async () => {
+    const response = await api.put("/api/users/profile");
+    // console.log("resp", response);
+    expect(response.statusCode).toBe(401);
+    expect(response.body).toMatchObject({
+      message: "No token",
+    });
   });
 });
