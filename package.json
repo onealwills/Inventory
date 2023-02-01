@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js",
-    "test": "jest"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose --runInBand --forceExit"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +25,7 @@
     "@babel/preset-env": "^7.20.2",
     "eslint": "^8.22.0",
     "eslint-plugin-react": "^7.30.1",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "supertest": "^6.3.3"
   }
 }

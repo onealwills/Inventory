@@ -45,22 +45,50 @@ userRouter.post("/signin", async (req, res) => {
   res.status(401).send({ message: "Invalid email or password" });
 });
 
+// userRouter.post("/register", async (req, res) => {
+//   const user = new User({
+//     name: req.body.name,
+//     email: req.body.email,
+//     password: bcrypt.hashSync(req.body.password, 8),
+//   });
+//   const createdUser = await user.save();
+//   res.status(201).send({
+//     _id: createdUser._id,
+//     name: createdUser.name,
+//     email: createdUser.email,
+//     isSuperAdmin: user.isSuperAdmin,
+//     isAdmin: user.isAdmin,
+//     isStockKeeper: user.isStockKeeper,
+//     token: generateToken(createdUser),
+//   });
+// });
 userRouter.post("/register", async (req, res) => {
-  const user = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8),
-  });
-  const createdUser = await user.save();
-  res.send({
-    _id: createdUser._id,
-    name: createdUser.name,
-    email: createdUser.email,
-    isSuperAdmin: user.isSuperAdmin,
-    isAdmin: user.isAdmin,
-    isStockKeeper: user.isStockKeeper,
-    token: generateToken(createdUser),
-  });
+  try {
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, 8),
+    });
+    const createdUser = await user.save();
+    res.status(201).send({
+      _id: createdUser._id,
+      name: createdUser.name,
+      email: createdUser.email,
+      isSuperAdmin: user.isSuperAdmin,
+      isAdmin: user.isAdmin,
+      isStockKeeper: user.isStockKeeper,
+      token: generateToken(createdUser),
+    });
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).send({
+        message: "Email already exists",
+      });
+    }
+    return res.status(500).send({
+      message: "Internal server error",
+    });
+  }
 });
 
 userRouter.get("/:id", async (req, res) => {
