@@ -9,7 +9,16 @@ import { expect, jest } from "@jest/globals";
 export const api = supertest(app);
 
 // console.log(api);
-let token;
+// let token = "";
+
+// beforeAll(async () => {
+//   const userSign = {
+//     email: "SuperAdmin@example.com",
+//     password: "12345678",
+//   };
+//   const response = api.post("/api/users/signin").send(userSign);
+//   token = response.body.token;
+// });
 
 describe("user Route", () => {
   beforeEach(async () => {
@@ -220,20 +229,6 @@ describe("PUT /profile", () => {
 });
 
 describe("first", () => {
-  beforeAll((done) => {
-    const userSign = {
-      email: "SuperAdmin@example.com",
-      password: "1234",
-    };
-    api
-      .post("/api/users/signin")
-      .send(userSign)
-      .end((err, res) => {
-        token = res.body.token;
-        done();
-      });
-  });
-
   it("returns 401 if not authenticated", async () => {
     const response = await api.put("/api/users/profile");
     // console.log("resp", response);
@@ -292,5 +287,83 @@ describe("GET /", () => {
         }),
       ])
     );
+  });
+});
+
+describe("DELETE /user/:id", () => {
+  beforeEach(async () => {
+    await User.deleteMany({});
+  });
+
+  it("should delete a user and return a message", async () => {
+    const user = new User({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password: "12345678",
+    });
+    await user.save();
+
+    const Admin = new User({
+      name: "Admin",
+      email: "Admin@example.com",
+      password: "1234",
+      isAdmin: true,
+    });
+    await Admin.save();
+
+    console.log("tokenise>>>", generateToken(Admin));
+    console.log("userid>>>", user._id);
+
+    const response = await api
+      .delete(`/api/users/${user._id}`)
+      .set("Authorization", `Bearer ${generateToken(Admin)}`)
+      .send();
+    console.log("response status", response.statusCode);
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("user deleted");
+    expect(response.body.user._id).toEqual(user._id.toString());
+  });
+
+  it("should return a status code 401 and a message if trying to delete super admin", async () => {
+    const superAdmin = new User({
+      name: "Super Admin",
+      email: "SuperAdmin@example.com",
+      password: "12345678",
+      isSuperAdmin: true,
+    });
+    await superAdmin.save();
+
+    const response = await api
+      .delete(`/api/users/${superAdmin._id}`)
+      .set("Authorization", `Bearer ${generateToken(superAdmin)}`)
+      .send();
+
+    expect(response.status).toBe(401);
+    expect(response.body.message).toBe("Invalid admin token");
+  });
+
+  it("should return a status code 400 and a message if trying to delete admin", async () => {
+    const admin = new User({
+      name: "Admin",
+      email: "Admin@example.com",
+      password: "12345678",
+      isAdmin: true,
+    });
+    await admin.save();
+
+    const response = await api
+      .delete(`/api/users/${admin._id}`)
+      .set("Authorization", `Bearer ${generateToken(admin)}`)
+      .send();
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("cannot delete admin");
+  });
+
+  it("should return a status code 404 and a message if the user is not found", async () => {
+    const response = await api.delete(`/user/5f3c3e3a3a3a3a3a3a3a3a3a`).send();
+
+    expect(response.status).toBe(404);
+    // expect(response.body.message).toBe("undefined");
   });
 });

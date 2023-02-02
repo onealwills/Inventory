@@ -53,13 +53,13 @@ app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 const port = process.env.PORT || 5000;
 
-// if (process.env.NODE_ENV === "development") {
-//   app.listen(port, () => {
-//     console.log(`serve at http://localhost:${port}`);
-//   });
-// }
+if (process.env.NODE_ENV === "development") {
+  app.listen(port, () => {
+    console.log(`serve at http://localhost:${port}`);
+  });
+}
 
-app.listen(port, () => {
-  console.log(`serve at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`serve at http://localhost:${port}`);
+// });
 export default app;
