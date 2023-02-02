@@ -243,3 +243,54 @@ describe("first", () => {
     });
   });
 });
+
+describe("GET /", () => {
+  let user1, user2;
+  beforeEach(async () => {
+    await User.deleteMany({});
+    user1 = new User({
+      name: "John Doe1",
+      email: "johndoe1@example.com",
+      password: "password1",
+    });
+    user2 = new User({
+      name: "Jane Doe2",
+      email: "janedoe2@example.com",
+      password: "password2",
+    });
+    await user1.save();
+    await user2.save();
+  });
+
+  it("returns all users", async () => {
+    const response = await api.get("/api/users/");
+
+    expect(response.statusCode).toBe(200);
+    console.log(response.body);
+    expect(response.body).toHaveLength(2);
+    // expect(response.body[0]).toContainEqual({
+    //   _id: expect.any(String),
+    //   name: "John Doe1",
+    //   email: "johndoe1@example.com",
+    // });
+    // expect(response.body[1]).toContainEqual({
+    //   _id: expect.any(String),
+    //   name: "Jane Doe2",
+    //   email: "janedoe2@example.com",
+    // });
+    expect(response.body).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          _id: expect.any(String),
+          name: "John Doe1",
+          email: "johndoe1@example.com",
+        }),
+        expect.objectContaining({
+          _id: expect.any(String),
+          name: "Jane Doe2",
+          email: "janedoe2@example.com",
+        }),
+      ])
+    );
+  });
+});
