@@ -8,18 +8,6 @@ import { expect, jest } from "@jest/globals";
 
 export const api = supertest(app);
 
-// console.log(api);
-// let token = "";
-
-// beforeAll(async () => {
-//   const userSign = {
-//     email: "SuperAdmin@example.com",
-//     password: "12345678",
-//   };
-//   const response = api.post("/api/users/signin").send(userSign);
-//   token = response.body.token;
-// });
-
 describe("user Route", () => {
   beforeEach(async () => {
     // console.log("Running beforeEach");
@@ -365,5 +353,58 @@ describe("DELETE /user/:id", () => {
 
     expect(response.status).toBe(404);
     // expect(response.body.message).toBe("undefined");
+  });
+});
+
+describe("PUT /:id", () => {
+  beforeEach(async () => {
+    let user = {
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password: "password123",
+    };
+
+    const res = await api.post("/api/users/register").send(user);
+  });
+  it("updates a user and returns updated user", async () => {
+    const user = new User({
+      name: "dele",
+      email: "dele@example.com",
+      password: "12345678",
+      isAdmin: false,
+    });
+    await user.save();
+
+    const admin = new User({
+      name: "Admin",
+      email: "Admin@example.com",
+      password: "12345678",
+      isAdmin: true,
+    });
+    await admin.save();
+
+    const res = await api
+      .put(`/api/users/${user._id}`)
+      .send({
+        name: "updated name",
+        email: "updated@example.com",
+        isSuperAdmin: true,
+        isAdmin: false,
+        isStockKeeper: false,
+      })
+      .set("Authorization", `Bearer ${generateToken(admin)}`);
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.message).toEqual("user updated");
+    expect(res.body.user.name).toEqual("updated name");
+    expect(res.body.user.email).toEqual("updated@example.com");
+    expect(res.body.user.isSuperAdmin).toEqual(true);
+    expect(res.body.user.isAdmin).toEqual(false);
+    expect(res.body.user.isStockKeeper).toEqual(false);
+  });
+
+  it("returns 404 for non-existing user", async () => {
+    const res = await api.put("/users/non-existing-id");
+    expect(res.statusCode).toEqual(404);
+    // expect(res.body.message).toEqual("user not found");
   });
 });
