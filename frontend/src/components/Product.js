@@ -20,9 +20,13 @@ export default function Product(props) {
         <span>&#8358;</span>
         {product.price}
       </td>
-      <Link to={`/stockKeeper/${product.stockKeeper._id}`}>
-        <td>{product.stockKeeper.stockKeeper.warehouse}</td>
-      </Link>
+      {product.stockKeeper ? (
+        <Link to={`/stockKeeper/${product.stockKeeper._id}`}>
+          <td>{product.stockKeeper.stockKeeper.warehouse}</td>
+        </Link>
+      ) : (
+        <></>
+      )}
     </tr>
   );
 }

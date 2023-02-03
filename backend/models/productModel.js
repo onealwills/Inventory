@@ -21,8 +21,8 @@ const productSchema = new mongoose.Schema(
     year: { type: String, required: true },
     stockQty: { type: Number, required: true },
     price: { type: Number, required: true },
-    rating: { type: Number, required: true },
-    numReviews: { type: Number, required: true },
+    rating: { type: Number, required: true, default: 0 },
+    numReviews: { type: Number, required: true, default: 0 },
     reviews: [reviewSchema],
   },
   { timestamps: true }
