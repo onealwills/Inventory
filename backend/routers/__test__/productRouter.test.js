@@ -260,3 +260,71 @@ describe("PUT /api/products/:id", () => {
     expect(response.body.message).toBe("No token");
   });
 });
+
+describe("DELETE /product/:id", () => {
+  let token;
+  let productId;
+
+  beforeEach(async () => {
+    const admin = await User.create({
+      name: "admin",
+      email: "admin@email.com",
+      password: "password",
+      isAdmin: true,
+    });
+    const product = await Product.create({
+      stockKeeper: admin._id,
+      image: "/images/2009 Honda CRV drier.jpg",
+      type: "Ac/drier",
+      make: "Honda",
+      model: "Crv",
+      year: "2009",
+      stockQty: 0,
+      price: 0,
+    });
+    productId = product._id;
+    token = generateToken(admin);
+  });
+
+  afterEach(async () => {
+    await Product.deleteMany({});
+    await User.deleteMany({});
+  });
+
+  it("should return 401 if user is not authenticated", async () => {
+    const res = await api.delete(`/api/products/${productId}`);
+    expect(res.status).toBe(401);
+    expect(res.body.message).toBe("No token");
+  });
+
+  it("should return 401 if user is not admin", async () => {
+    const normalUser = await User.create({
+      name: "normalUser",
+      email: "normaluser@email.com",
+      password: "password",
+    });
+    const normalUserToken = generateToken(normalUser);
+    const res = await api
+      .delete(`/api/products/${productId}`)
+      .set("Authorization", ` Bearer ${normalUserToken}`);
+    expect(res.status).toBe(401);
+    expect(res.body.message).toBe("Invalid admin token");
+  });
+
+  it("should return 404 if product is not found", async () => {
+    const res = await api
+      .delete("/api/products/5f9d6bdb6968f358101f4b2c")
+      .set("Authorization", `Bearer ${token}`);
+    expect(res.status).toBe(404);
+    expect(res.body.message).toBe("Product not found");
+  });
+
+  it("should delete the product if request is valid", async () => {
+    const res = await api
+      .delete(`/api/products/${productId}`)
+      .set("Authorization", `Bearer ${token}`);
+    expect(res.status).toBe(200);
+    expect(res.body.message).toBe("Product deleted");
+    expect(res.body.product._id).toBe(productId.toHexString());
+  });
+});
