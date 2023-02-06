@@ -328,3 +328,110 @@ describe("DELETE /product/:id", () => {
     expect(res.body.product._id).toBe(productId.toHexString());
   });
 });
+
+describe("Add product review", () => {
+  it("Should add a product review for a valid product", async () => {
+    const product = new Product({
+      make: "Test Make",
+      model: "Test Model",
+      type: "Test Type",
+      year: 2000,
+      stockQty: 10,
+      price: 1000,
+      rating: 4,
+      numReviews: 2,
+      image: "test-image.jpg",
+    });
+    await product.save();
+
+    const normalUser = await User.create({
+      name: "normalUser",
+      email: "normaluser@email.com",
+      password: "password",
+    });
+    const normalUserToken = generateToken(normalUser);
+
+    const review = {
+      name: "normalUser",
+      comment: "Test comment",
+      rating: 4,
+    };
+
+    const response = await api
+      .post(`/api/products/${product._id}/reviews`)
+      .set("Authorization", `Bearer ${normalUserToken}`)
+      .send(review)
+      .expect(201);
+    // console.log("res>>>", response.body);
+    expect(response.body.message).toBe("review added successfully");
+    expect(response.body.review.name).toBe(review.name);
+    expect(response.body.review.comment).toBe(review.comment);
+    expect(response.body.review.rating).toBe(review.rating);
+  });
+
+  it("Should return a 404 error if the user already submitted a review", async () => {
+    const product = new Product({
+      make: "Test Make",
+      model: "Test Model",
+      type: "Test Type",
+      year: 2000,
+      stockQty: 10,
+      price: 1000,
+      rating: 4,
+      numReviews: 2,
+      image: "test-image.jpg",
+      reviews: [
+        {
+          name: "Test User",
+          comment: "Test comment",
+          rating: 4,
+        },
+      ],
+    });
+    await product.save();
+
+    const review = {
+      name: "Test User",
+      comment: "Test comment",
+      rating: 4,
+    };
+    const user = await User.create({
+      name: "teddy",
+      email: "teddy@email.com",
+      password: "password",
+    });
+    const userToken = generateToken(user);
+    const response = await api
+      .post(`/api/products/${product._id}/reviews`)
+      .set("Authorization", `Bearer ${userToken}`)
+      .send(review)
+      .expect(201);
+    console.log("response>>>>>>", response.body);
+    expect(response.body.message).toBe("review added successfully");
+  });
+
+  //   it("Should return a 201 if the product review is added", async () => {
+  //     const review = {
+  //       name: "Test User",
+  //       comment: "Test comment",
+  //       rating: 4,
+  //     };
+
+  //     const user = await User.create({
+  //       name: "User",
+  //       email: "user@email.com",
+  //       password: "password",
+  //     });
+  //     const userToken = generateToken(user);
+  //     const fakeProduct = "63641c1736a43633e81f3a5f";
+  //     const response = await api
+  //       .post(`/api/products/${fakeProduct}/reviews`)
+  //       .set("Authorization", `Bearer ${userToken}`)
+  //       .send(review)
+  //       .expect(201);
+
+  //     console.log("resss>>>>", response.body);
+
+  //     expect(response.body.message).toBe("Product not found");
+  //   }, 10000);
+});
