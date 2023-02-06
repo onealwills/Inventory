@@ -237,3 +237,453 @@ describe("Post an Order", () => {
     expect(res.body).toHaveProperty("message", "cart empty");
   });
 });
+
+describe("GET /orders/:id", () => {
+  //   const del = new User({
+  //     name: "del",
+  //     email: "del@email.com",
+  //     password: "password",
+  //     isAdmin: true,
+  //   });
+  //   await del.save();
+
+  //   const order = new Order({
+  //     user: del._id,
+  //     orderItems: [
+  //       {
+  //         product: new mongoose.Types.ObjectId(),
+  //         qty: 2,
+  //         year: 2022,
+  //         make: "Toyota",
+  //         model: "Camry",
+  //         type: "Sedan",
+  //         image: "image1.jpg",
+  //         price: 100,
+  //       },
+  //       {
+  //         product: new mongoose.Types.ObjectId(),
+  //         qty: 1,
+  //         year: 2020,
+  //         make: "Honda",
+  //         model: "Civic",
+  //         type: "Sedan",
+  //         image: "image2.jpg",
+  //         price: 50,
+  //       },
+  //     ],
+  //     shippingAddress: {
+  //       name: "Jane Doe",
+  //       address: "123 Main St",
+  //       city: "San Francisco",
+  //       postalCode: "94109",
+  //       country: "USA",
+  //     },
+  //     paymentMethod: "Credit Card",
+  //     itemsPrice: 200,
+  //     totalPrice: 210,
+  //   });
+
+  //   await order.save();
+
+  //   console.log("order >>", order._id);
+  //   console.log("token1>>", token);
+
+  //   token = generateToken(del);
+
+  it("should return 401 if client is not logged in", async () => {
+    const messi = new User({
+      name: "messi",
+      email: "messi@email.com",
+      password: "password",
+      isAdmin: true,
+    });
+    await messi.save();
+
+    const order = new Order({
+      user: messi._id,
+      orderItems: [
+        {
+          product: new mongoose.Types.ObjectId(),
+          qty: 4,
+          year: 2022,
+          make: "Toyota",
+          model: "Rx330",
+          type: "SUV",
+          image: "image1.jpg",
+          price: 1000,
+        },
+        {
+          product: new mongoose.Types.ObjectId(),
+          qty: 1,
+          year: 2022,
+          make: "Honda",
+          model: "Civic",
+          type: "Sedan",
+          image: "image2.jpg",
+          price: 500,
+        },
+      ],
+      shippingAddress: {
+        name: "Doe",
+        address: "123 Main St",
+        city: "San Francisco",
+        postalCode: "94109",
+        country: "USA",
+      },
+      paymentMethod: "Credit Card",
+      itemsPrice: 200,
+      totalPrice: 210,
+    });
+
+    await order.save();
+
+    const token = generateToken(messi);
+
+    console.log("order 2 >>", order._id);
+    console.log("token 2>>", token);
+
+    const res = await api.get(`/api/orders/${order.id}`);
+
+    // console.log("id1>>", order._id);
+    console.log("token1>>", token);
+
+    expect(res.status).toBe(401);
+    expect(res.body.message).toBe("No token");
+  });
+
+  it("should return 404 if order with the given id is not found", async () => {
+    const lexy = new User({
+      name: "lexy",
+      email: "lexy@email.com",
+      password: "password",
+      isAdmin: true,
+    });
+    await lexy.save();
+
+    const order = new Order({
+      user: lexy._id,
+      orderItems: [
+        {
+          product: new mongoose.Types.ObjectId(),
+          qty: 4,
+          year: 2022,
+          make: "Toyota",
+          model: "Rx330",
+          type: "SUV",
+          image: "image1.jpg",
+          price: 1000,
+        },
+        {
+          product: new mongoose.Types.ObjectId(),
+          qty: 1,
+          year: 2022,
+          make: "Honda",
+          model: "Civic",
+          type: "Sedan",
+          image: "image2.jpg",
+          price: 500,
+        },
+      ],
+      shippingAddress: {
+        name: "Doe",
+        address: "123 Main St",
+        city: "San Francisco",
+        postalCode: "94109",
+        country: "USA",
+      },
+      paymentMethod: "Credit Card",
+      itemsPrice: 200,
+      totalPrice: 210,
+    });
+
+    await order.save();
+
+    const token = generateToken(lexy);
+    const invalidId = "1".repeat(24);
+
+    const res = await api
+      .get(`/api/orders/${invalidId}`)
+      .set("Authorization", ` Bearer ${token}`);
+
+    expect(res.status).toBe(404);
+    expect(res.body.message).toBe("order not found");
+  });
+
+  it("should return the order if it is found", async () => {
+    const oneal = new User({
+      name: "oneal",
+      email: "oneal@email.com",
+      password: "password",
+      isAdmin: true,
+    });
+    await oneal.save();
+
+    const order = new Order({
+      user: oneal._id,
+      orderItems: [
+        {
+          product: new mongoose.Types.ObjectId(),
+          qty: 4,
+          year: 2022,
+          make: "Toyota",
+          model: "Rx330",
+          type: "SUV",
+          image: "image1.jpg",
+          price: 1000,
+        },
+        {
+          product: new mongoose.Types.ObjectId(),
+          qty: 1,
+          year: 2022,
+          make: "Honda",
+          model: "Civic",
+          type: "Sedan",
+          image: "image2.jpg",
+          price: 500,
+        },
+      ],
+      shippingAddress: {
+        name: "Doe",
+        address: "123 Main St",
+        city: "San Francisco",
+        postalCode: "94109",
+        country: "USA",
+      },
+      paymentMethod: "Credit Card",
+      itemsPrice: 200,
+      totalPrice: 210,
+    });
+
+    await order.save();
+
+    const token = generateToken(oneal);
+
+    const res = await api
+      .get(`/api/orders/${order._id}`)
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("orderItems");
+    expect(res.body).toHaveProperty("shippingAddress");
+    expect(res.body).toHaveProperty("paymentMethod");
+    expect(res.body).toHaveProperty("itemsPrice");
+    expect(res.body).toHaveProperty("totalPrice");
+    expect(res.body).toHaveProperty("user");
+  });
+});
+
+describe("POST /orders/:id/pay", () => {
+  it("should update an order as paid", async () => {
+    const retro = new User({
+      name: "retro",
+      email: "retro@email.com",
+      password: "password",
+      isAdmin: true,
+    });
+    await retro.save();
+
+    const order = await Order.create(
+      {
+        user: retro._id,
+        orderItems: [
+          {
+            product: new mongoose.Types.ObjectId(),
+            qty: 4,
+            year: 2022,
+            make: "Toyota",
+            model: "Rx330",
+            type: "SUV",
+            image: "image1.jpg",
+            price: 1000,
+          },
+          {
+            product: new mongoose.Types.ObjectId(),
+            qty: 1,
+            year: 2022,
+            make: "Honda",
+            model: "Civic",
+            type: "Sedan",
+            image: "image2.jpg",
+            price: 500,
+          },
+        ],
+        shippingAddress: {
+          name: "Doe",
+          address: "123 Main St",
+          city: "San Francisco",
+          postalCode: "94109",
+          country: "USA",
+        },
+        paymentMethod: "Credit Card",
+        itemsPrice: 200,
+        totalPrice: 210,
+      }
+      // order data here
+    );
+    const res = await api.post(`/api/orders/${order._id}/pay`).send({
+      id: "123456",
+      status: "success",
+      update_time: "2023-01-30T10:00:00Z",
+      email_address: "example@email.com",
+    });
+
+    // console.log("Ress>>", res);
+
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveProperty("message", "Order Updated");
+    expect(res.body.order).toHaveProperty("isPaid", true);
+    expect(res.body.order).toHaveProperty("paidAt");
+    expect(res.body.order).toHaveProperty("paymentResult");
+    expect(res.body.order.paymentResult).toHaveProperty("id", "123456");
+    expect(res.body.order.paymentResult).toHaveProperty("status", "success");
+    expect(res.body.order.paymentResult).toHaveProperty(
+      "update_time",
+      "2023-01-30T10:00:00Z"
+    );
+    expect(res.body.order.paymentResult).toHaveProperty(
+      "email_address",
+      "example@email.com"
+    );
+  });
+
+  it("should return 404 if order is not found", async () => {
+    const res = await api
+      .post("/api/orders/5f47b60027aa3c0698ce77ab/pay")
+      .send({
+        id: "123456",
+        status: "success",
+        update_time: "2023-01-30T10:00:00Z",
+        email_address: "example@email.com",
+      });
+    // console.log("Ress2>>", res);
+    expect(res.status).toEqual(404);
+    expect(res.body).toHaveProperty("message", "Order not found");
+  });
+});
+
+describe("DELETE /orders/:id", () => {
+  it("should delete an order if the order exists and the user has admin privileges", async () => {
+    const Admin = new User({
+      name: "Miami",
+      email: "Miami@example.com",
+      password: "1234",
+      isAdmin: true,
+    });
+    await Admin.save();
+
+    const order = new Order({
+      user: new mongoose.Types.ObjectId(),
+      orderItems: [
+        {
+          product: new mongoose.Types.ObjectId(),
+          qty: 4,
+          year: 2022,
+          make: "Toyota",
+          model: "Rx330",
+          type: "SUV",
+          image: "image1.jpg",
+          price: 1000,
+        },
+        {
+          product: new mongoose.Types.ObjectId(),
+          qty: 1,
+          year: 2022,
+          make: "Honda",
+          model: "Civic",
+          type: "Sedan",
+          image: "image2.jpg",
+          price: 500,
+        },
+      ],
+      shippingAddress: {
+        name: "Doe",
+        address: "123 Main St",
+        city: "San Francisco",
+        postalCode: "94109",
+        country: "USA",
+      },
+      paymentMethod: "Credit Card",
+      itemsPrice: 200,
+      totalPrice: 210,
+    });
+
+    await order.save();
+
+    const res = await api
+      .delete(`/api/orders/${order._id}`)
+      .set("Authorization", `Bearer ${generateToken(Admin)}`);
+    // console.log("ress.body>>>", res.body);
+    expect(res.status).toBe(200);
+    expect(res.body.message).toBe("order deleted");
+    expect(res.body.order).toBeInstanceOf(Object);
+  });
+
+  it("should return an error if the order does not exist", async () => {
+    // const invalidId = "1".repeat(24);
+    const Admin = new User({
+      name: "florida",
+      email: "florida@example.com",
+      password: "1234",
+      isAdmin: true,
+    });
+    await Admin.save();
+
+    const res = await api
+      .delete(`/api/orders/${new mongoose.Types.ObjectId()}`)
+      .set("Authorization", `Bearer ${generateToken(Admin)}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.message).toBe("order not found");
+  });
+
+  it("should return an unauthorized error if the user is not authenticated", async () => {
+    const Admin = new User({
+      name: "king",
+      email: "king@example.com",
+      password: "1234",
+      isAdmin: true,
+    });
+    await Admin.save();
+
+    const order = new Order({
+      user: new mongoose.Types.ObjectId(),
+      orderItems: [
+        {
+          product: new mongoose.Types.ObjectId(),
+          qty: 4,
+          year: 2022,
+          make: "Toyota",
+          model: "Rx330",
+          type: "SUV",
+          image: "image1.jpg",
+          price: 1000,
+        },
+        {
+          product: new mongoose.Types.ObjectId(),
+          qty: 1,
+          year: 2022,
+          make: "Honda",
+          model: "Civic",
+          type: "Sedan",
+          image: "image2.jpg",
+          price: 500,
+        },
+      ],
+      shippingAddress: {
+        name: "Doe",
+        address: "123 Main St",
+        city: "San Francisco",
+        postalCode: "94109",
+        country: "USA",
+      },
+      paymentMethod: "Credit Card",
+      itemsPrice: 200,
+      totalPrice: 210,
+    });
+
+    await order.save();
+    const res = await api.delete(`/api/orders/${order._id}`);
+    expect(res.status).toBe(401);
+    expect(res.body.message).toBe("No token");
+  });
+});
